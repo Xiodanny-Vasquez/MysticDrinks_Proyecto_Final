@@ -1,6 +1,6 @@
 import React from "react";
 import "./Login.css";
-import imgLogo from "../../assets/logo-elixir.png";
+import imgLogo from "../../assets/logo-mystic.png";
 import { Link } from "react-router-dom";
 
 function Login({ onToggle }) {
@@ -8,7 +8,7 @@ function Login({ onToggle }) {
     <div className="login-container">
       <div className="login-box">
         <div className="logo">
-          <img src={imgLogo} alt="Logo de Elixir Drinks" />
+          <img src={imgLogo} alt="Logo de Mystic Drinks" />
         </div>
         <div className="login-content">
           <h2>Entrada exclusiva</h2>

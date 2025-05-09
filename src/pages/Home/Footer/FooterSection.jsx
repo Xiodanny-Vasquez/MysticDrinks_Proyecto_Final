@@ -11,7 +11,7 @@ function FooterSection() {
         <h2 className="footer-title"> <img src={logoMystic} alt="" style={{ height: "80px" }} /></h2>
         <div className="footer-contact">
           <p>Teléfono: 300-2588741</p>
-          <p>Correo Electrónico: elixir@cocteles.com</p>
+          <p>Correo Electrónico: Mystic@cocteles.com</p>
         </div>
         <div className="footer-icons">
           <img src={facebookIcon} alt="Facebook" className="social-icon" />

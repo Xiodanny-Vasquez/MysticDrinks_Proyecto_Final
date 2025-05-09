@@ -8,7 +8,7 @@ function HeroSection() {
   return (
     <div className="hero-section w-auto text-white text-center">
       <Container>
-        <h1 className="">Elixir</h1>
+        <h1 className="">MYSTIC DRINKS</h1>
         <p className="lead fs-4">Donde cada trago cuenta una historia.</p>
         <Link to="/productos">
          <Carousel1 />

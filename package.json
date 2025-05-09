@@ -1,5 +1,5 @@
 {
-  "name": "elixir-drinks",
+  "name": "Mystic-drinks",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,8 +8,8 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
-    "elixir-drinks": "file:",
     "lucide-react": "^0.454.0",
+    "Mystic-drinks": "file:",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.5",
     "react-dom": "^18.3.1",
