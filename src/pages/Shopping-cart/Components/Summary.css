@@ -1,0 +1,100 @@
+.card-summary {
+  margin-left: 5rem;
+  background-color: rgba(30, 30, 30, 0.49);
+  border-radius: 10px;
+  width: 460px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-bottom: 2rem;
+
+  h2 {
+    margin: 10px;
+    color: var(--accent-color);
+    font-family: var(--primary-font);
+  }
+}
+
+.lista {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
+
+  p {
+    margin: 10px;
+    font-family: var(--secondary-font);
+  }
+}
+
+.name-product {
+  flex: 0 0 250px;
+}
+
+.total-price {
+  font-family: var(--secondary-font);
+  text-align: center;
+  font-size: 2rem;
+  margin: 2rem;
+}
+
+.divider {
+  width: 100%;
+  height: 5px;
+  background-color: var(--accent-color);
+  border: none;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  text-align: center;
+}
+
+.empty-cart-image {
+  max-width: 150px;
+  margin-bottom: 20px;
+}
+
+.empty-cart-text {
+  font-size: 1.5rem;
+  color: #555;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .card-summary {
+    margin-left: 0.8rem;
+    width: 100%; /* Ocupa el ancho completo en pantallas pequeñas */
+    padding: 15px;
+  }
+
+  .name-product {
+    flex: 1 1 100%; /* Hace que el nombre del producto ocupe el 100% en pantallas pequeñas */
+  }
+
+  .total-price {
+    font-size: 1.5rem;
+    margin: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-summary {
+    margin-left: 0.2rem;
+    padding: 10px;
+  }
+
+  .empty-cart-text {
+    font-size: 1.2rem;
+  }
+
+  .total-price {
+    font-size: 1.2rem;
+    margin: 1rem;
+  }
+}

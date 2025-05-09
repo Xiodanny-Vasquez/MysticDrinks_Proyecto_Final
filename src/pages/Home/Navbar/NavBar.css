@@ -1,0 +1,118 @@
+.nav-bar {
+  background-color: black;
+}
+
+.nav-bar .nav-link {
+  color: white;
+  position: relative;
+  padding-bottom: 5px;
+  text-decoration: none;
+}
+/* Efecto de subrayado */
+.nav-bar .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px; 
+  background-color: #eae6ca; 
+  transition: width 0.3s ease;
+}
+/* Mostrar la línea en hover */
+.nav-bar .nav-link:hover::after {
+  width: 100%; 
+}
+
+.nav-bar .nav-link:hover {
+  color: #ddd;
+}
+
+/* Estilos para el boton Toggle*/
+.nav-bar .navbar-toggler {
+  border: none;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Estilo de las líneas del toggle (hamburger menu) */
+.nav-bar .navbar-toggler-icon {
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.8) 30%,
+    transparent 30%
+  ),
+  linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.8) 30%,
+    transparent 30%
+  ),
+  linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.8) 30%,
+    transparent 30%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 2px;
+  background-position: 0 0, 0 6px, 0 12px;
+}
+
+/* Hover effect para el toggle */
+.nav-bar .navbar-toggler:hover .navbar-toggler-icon {
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 30%,
+    transparent 30%
+  ),
+  linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 30%,
+    transparent 30%
+  ),
+  linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 30%,
+    transparent 30%
+  );
+}
+/* Elimina el borde de enfoque del toggle */
+.nav-bar .navbar-toggler:focus {
+  outline: none;
+  box-shadow: none; 
+}
+
+
+/* Style for active links */
+.nav-link.active {
+  color: #ffae41 !important;
+}
+
+/* Hover effect for links */
+.nav-link:hover {
+  color: your-hover-color !important; /* Replace with your desired hover color */
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  /* Adjust the navbar to stack items vertically */
+  .nav-bar .navbar-collapse {
+    text-align: center;
+  }
+
+  .nav-bar .nav-link {
+    padding: 10px 0;
+    width: 100%;
+    display: block;
+  }
+
+  .nav-bar .navbar-brand img {
+    height: 60px; /* Adjust logo size for smaller screens */
+  }
+
+  /* Adjust container for icons */
+  .nav-bar .ms-auto {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1rem;
+  }
+}

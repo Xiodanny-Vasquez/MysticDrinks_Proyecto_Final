@@ -1,0 +1,47 @@
+.cocktail-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+  }
+  
+  .cocktail-emoji {
+    font-size: 3rem;
+    display: inline-block;
+    animation: rotate 1.5s infinite linear;
+  }
+  
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(25deg);
+    }
+    50% {
+      transform: rotate(0deg);
+    }
+    75% {
+      transform: rotate(-25deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+  
+  /* Optional: Add a subtle bounce effect */
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(5deg);
+    }
+  }
+  
+  /* Use this class instead if you prefer the bounce animation */
+  .cocktail-emoji-bounce {
+    font-size: 3rem;
+    display: inline-block;
+    animation: bounce 1.5s infinite ease-in-out;
+  }

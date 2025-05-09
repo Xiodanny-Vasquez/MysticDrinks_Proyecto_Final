@@ -1,0 +1,48 @@
+.Banner-section {
+  background: linear-gradient(
+    45deg,
+    rgb(255, 64, 5),
+    rgb(41, 34, 11),
+    rgb(0, 0, 0),
+    rgb(0, 0, 0)
+  );
+  height: 150px;
+  overflow: hidden;
+  color: #ffffff;
+
+  h1 {
+    text-align: center;
+    font-family: var(--primary-font);
+    font-size: 5rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .Banner-section {
+    height: 300px;
+  }
+  .Banner-section h1 {
+    font-size: 3rem;
+  }
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .Banner-section {
+    height: 250px;
+  }
+  .Banner-section h1 {
+    font-size: 2.5rem;
+  }
+}
+
+/* Ajustes para pantallas muy pequeñas (teléfonos) */
+@media (max-width: 480px) {
+  .Banner-section {
+    height: 200px;
+    padding: 0 10px;
+  }
+  .Banner-section h1 {
+    font-size: 2rem;
+  }
+}

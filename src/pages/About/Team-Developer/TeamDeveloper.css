@@ -1,0 +1,69 @@
+.bodyTeam {
+  background-color: var(--primary-color);
+  width: auto;
+}
+
+.section-team {
+  text-align: center;
+  padding-bottom: 2rem;
+
+  h1 {
+    padding: 3rem 0 2rem;
+    color: var(--accent-color);
+    font-family: var(--primary-font);
+  }
+
+  p{
+    padding: 3rem 0 2rem;;
+    color: var(--secondary-color);
+    font-family: var(--secondary-font);
+    font-size: 1.5rem;
+  }
+}
+
+.section-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+/* Responsivo para pantallas medianas */
+@media (max-width: 1024px) {
+    .section-team h1 {
+      font-size: 2.5rem;
+    }
+    .section-team p {
+      font-size: 1.3rem;
+    }
+  }
+  
+  /* Responsivo para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .section-team h1 {
+      font-size: 2rem;
+    }
+    .section-team p {
+      margin: 0 2px;
+      font-size: 1.1rem;
+    }
+    .section-cards {
+      flex-direction: column; /* Pone las tarjetas en una columna */
+      align-items: center; /* Centra las tarjetas en la columna */
+    }
+  }
+  
+  /* Responsivo para pantallas muy pequeñas (teléfonos) */
+  @media (max-width: 480px) {
+    .section-team h1 {
+      font-size: 1.8rem;
+      padding: 2rem 0;
+    }
+    .section-team p {
+      font-size: 1rem;
+      padding: 1.5rem 0;
+    }
+    .section-cards {
+      flex-direction: column;
+      align-items: center;
+    }
+  }

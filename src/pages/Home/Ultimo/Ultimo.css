@@ -1,0 +1,142 @@
+.ultima-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1e1e1e;
+  padding: 4rem;
+  color: #f2f2f2;
+  flex-wrap: wrap; /* Permite el ajuste en pantallas pequeñas */
+  gap: 2rem; /* Espacio entre elementos */
+}
+
+.images-container {
+  display: flex;
+  gap: 3rem;
+  margin-right: 4rem;
+  flex-wrap: wrap; /* Permite que las imágenes se envuelvan en pantallas pequeñas */
+}
+
+.image1-placeholder,
+.image2-placeholder {
+  width: 300px;
+  height: 500px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+}
+
+.image1-placeholder {
+  background-image: url('/src/assets/coctel_cafe.jpeg');
+}
+
+.image2-placeholder {
+  background-image: url('/src/assets/coctel_cereza.jpeg');
+}
+
+.text-container {
+  max-width: 700px;
+  text-align: left;
+}
+
+.text-container h2 {
+  font-size: 2.5rem;
+  font-family: var(--primary-font);
+  color: #ffae42;
+  margin-bottom: 1rem;
+}
+
+.text-container p {
+  font-size: 1.1rem;
+  font-family: var(--secondary-font);
+  line-height: 2rem;
+}
+
+/* Estilos responsivos */
+
+/* Para pantallas de 1080px y menos */
+@media (max-width: 1080px) {
+  .ultima-section {
+    padding: 3rem;
+    gap: 1.5rem;
+  }
+
+  .images-container {
+    gap: 2rem;
+    margin-right: 2rem;
+  }
+
+  .image1-placeholder,
+  .image2-placeholder {
+    width: 250px;
+    height: 400px;
+  }
+
+  .text-container h2 {
+    font-size: 2.2rem;
+  }
+
+  .text-container p {
+    font-size: 1rem;
+    line-height: 1.8rem;
+  }
+}
+
+/* Para pantallas de 768px y menos */
+@media (max-width: 768px) {
+  .ultima-section {
+    flex-direction: column; /* Apila los elementos verticalmente */
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .images-container {
+    flex-direction: row; /* Alinea las imágenes horizontalmente */
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .image1-placeholder,
+  .image2-placeholder {
+    width: 200px;
+    height: 350px; /* Ajusta el tamaño para pantallas más pequeñas */
+  }
+
+  .text-container h2 {
+    font-size: 2rem;
+  }
+
+  .text-container p {
+    font-size: 1rem;
+    line-height: 1.6rem;
+  }
+}
+
+/* Para pantallas de 480px y menos */
+@media (max-width: 350px) {
+  .ultima-section {
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+
+  .images-container {
+    flex-direction: column; /* Apila las imágenes verticalmente */
+    align-items: center;
+    margin-right: 0;
+    gap: 1rem;
+  }
+
+  .image1-placeholder,
+  .image2-placeholder {
+    width: 50%;
+    max-width: 250px; /* Máximo ancho en pantallas pequeñas */
+    height: auto; /* Mantiene la relación de aspecto */
+  }
+
+  .text-container h2 {
+    font-size: 1.8rem;
+  }
+
+  .text-container p {
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,44 @@
+.Section-sup {
+  margin-top: 3rem;
+  text-align: center;
+
+  h1 {
+    font-family: var(--primary-font);
+    color: var(--accent-color);
+    font-size: 3rem;
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  width: 630px;
+  align-items: center;
+  margin-left: 2.8rem;
+  margin-bottom: 1rem;
+  padding: 0 1rem; 
+}
+
+.Header p {
+  margin: 0;
+}
+
+.Header .set-right {
+  margin-left: auto;
+  padding-right: 1rem; 
+}
+
+.shop-cart {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  flex-wrap: wrap;
+}

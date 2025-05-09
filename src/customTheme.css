@@ -1,0 +1,30 @@
+:root {
+  --primary-color: #2e2828;
+  --secondary-color: #e5e2db;
+  --accent-color: #d4a373;
+
+  /* Fuentes */
+  --primary-font: "Inknut Antiqua", serif;
+  --secondary-font: "Poppins", sans-serif;
+  --botones-font: "Poppins", sans-serif;
+  --cursive-font: "hurricane", sans-serif;
+
+  body{
+    background-color: var(--primary-color);
+  }
+}
+
+body {
+  font-family: var(--secondary-font);
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.btn-custom {
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+}
+
+.content{
+  background-color: var(--primary-color);
+}

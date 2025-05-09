@@ -1,0 +1,10 @@
+section{
+    background: #1e1e1e;
+    color: white;
+}
+
+.image-container{
+    width : 400px;
+    height: 200;
+    border-radius: 20px;
+}

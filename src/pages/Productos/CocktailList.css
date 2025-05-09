@@ -1,0 +1,107 @@
+.cocteles-card {
+  background-color: var(--primary-color);
+}
+
+.cocktail-header {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.search-header {
+  background-color: var(--primary-color);
+  padding: 3rem 1rem;
+}
+
+.cursive-font {
+  font-family: var(--secondary-font);
+  font-weight: 600;
+  color: #BF9D5F;
+}
+
+/* Dark input styling */
+.search-header .form-control {
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+}
+
+.search-header .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.search-header .form-control:focus {
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Button styling */
+.search-header .btn-outline-light {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.search-header .btn-outline-light:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Dropdown styling */
+.search-header .dropdown-menu {
+  background-color: var(--primary-color);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.search-header .dropdown-item {
+  color: white;
+}
+
+.search-header .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .search-header {
+    padding: 2rem 1rem;
+  }
+  
+  .search-header h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .search-header {
+    padding: 4rem 1rem;
+  }
+}
+
+/* Add responsive padding adjustments */
+@media (max-width: 576px) {
+  .cocteles-card .container {
+    padding: 1rem;
+  }
+  
+  .cocktail-header h2 {
+    padding-left: 1rem;
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 576px) {
+  .cocteles-card .container {
+    padding: 2rem;
+  }
+  
+  .cocktail-header h2 {
+    padding-left: 2rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .cocteles-card .container {
+    padding: 4rem;
+  }
+  
+  .cocktail-header h2 {
+    padding-left: 4rem;
+  }
+}

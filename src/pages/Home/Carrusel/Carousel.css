@@ -1,0 +1,147 @@
+/* ==== Coverflow Carousel 3D (Mejorado) ==== */
+.coverflow-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 80px auto;
+  perspective: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+.slides {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide {
+  position: absolute;
+  width: 240px;
+  height: 320px;
+  padding: 16px;
+  background: #1d1b1b;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(255, 183, 0, 0.5);
+  transition: all 0.6s ease;
+  opacity: 0;
+  transform: scale(0.7);
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.slide.active {
+  opacity: 1;
+  transform: scale(1) translateZ(0);
+  z-index: 3;
+  height: 360px;
+}
+
+.slide.left {
+  transform: translateX(-220px) rotateY(25deg) scale(0.8);
+  opacity: 0.6;
+  z-index: 2;
+}
+
+.slide.right {
+  transform: translateX(220px) rotateY(-25deg) scale(0.8);
+  opacity: 0.6;
+  z-index: 2;
+}
+
+.slide.hidden {
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.carousel1-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  margin-bottom: 0.8rem;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+}
+
+.slide h3 {
+  margin: 0;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.1rem;
+  color: #ff3c3c;
+  text-align: center;
+}
+
+.nav {
+  background: none;
+  border: none;
+  font-size: 3rem;
+  color: #ffffff;
+  cursor: pointer;
+  z-index: 5;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: color 0.3s, transform 0.2s;
+}
+
+.nav:hover {
+  color: #ff0000;
+  transform: scale(1.1) translateY(-50%);
+}
+
+.nav.left {
+  left: 10px;
+}
+
+.nav.right {
+  right: 10px;
+}
+
+/* ===== Responsive Styles ===== */
+@media (max-width: 768px) {
+  .slide {
+    width: 180px;
+    height: 260px;
+  }
+
+  .slide.active {
+    height: 280px;
+  }
+
+  .slide.left,
+  .slide.right {
+    transform: translateX(160px) rotateY(15deg) scale(0.8);
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    font-size: 2.5rem;
+  }
+
+  .slide {
+    width: 140px;
+    height: 200px;
+  }
+
+  .slide.active {
+    height: 220px;
+  }
+
+  .carousel1-img {
+    margin-bottom: 0.5rem;
+  }
+
+  .slide h3 {
+    font-size: 0.9rem;
+  }
+}

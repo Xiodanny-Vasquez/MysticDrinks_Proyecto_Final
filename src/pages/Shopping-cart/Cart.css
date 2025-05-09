@@ -1,0 +1,98 @@
+.cart {
+  background-color: #52443c;
+  width: 700px;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: space-between;
+
+  img {
+    width: 80px;
+    height: 80px;
+    margin-right: 15px;
+  }
+
+  h3 {
+    flex: 1;
+    font-family: var(--secondary-font);
+    color: var(--secondary-color);
+  }
+
+  p {
+    flex: 0 0 70px;
+    text-align: center;
+  }
+
+  Button {
+    flex: 0 0 30px;
+    background-color: transparent;
+    border: none;
+    border-radius: 80%;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin: 10px;
+  }
+
+  Button:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+  }
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .cart {
+    width: 100%; /* Ocupa el ancho completo de la pantalla */
+    flex-direction: column; /* Cambia a columna para apilar los elementos */
+    padding: 1rem;
+  }
+
+  img {
+    width: 60px; /* Reduce el tamaño de la imagen */
+    height: 60px;
+    margin-bottom: 5px;
+  }
+
+  h3 {
+    text-align: center; /* Centra el título en pantallas pequeñas */
+    margin-bottom: 10px;
+    width: 150px; /* Reduce el tamaño de la imagen */
+    height: 60px;
+  }
+
+  p {
+    margin-bottom: 1px;
+    flex: 1; /* Ocupa el ancho disponible en la columna */
+    text-align: center;
+    width: 150px; /* Reduce el tamaño de la imagen */
+    height: 60px;
+  }
+
+  button {
+    flex: none; /* Elimina la restricción de tamaño para el botón */
+    margin: 0.5rem;
+    font-size: 1rem; /* Reduce el tamaño del botón */
+  }
+}
+
+@media (max-width: 480px) {
+  .cart {
+    padding: 0.5rem;
+  }
+
+  h3 {
+    font-size: 1rem; /* Ajusta el tamaño del texto */
+  }
+
+  p {
+    font-size: 0.9rem; /* Ajusta el tamaño del texto en párrafos */
+  }
+
+  button {
+    font-size: 0.9rem; /* Ajusta el tamaño del botón */
+  }
+}

@@ -1,0 +1,36 @@
+.hero-section {
+  background: #1e1e1e;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+
+  h1 {
+    font-family: var(--primary-font);
+    font-size: 6rem;
+  }
+
+  p {
+    font-family: var(--secondary-font);
+  }
+}
+
+  .carousel-section {
+    background-color: black;
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+  
+  .carousel-section h3 {
+    font-size: 1rem;
+    font-family: serif;
+    color: #f47506;
+    margin-bottom: 1.5rem;
+  }
+  
+  .carousel-section img {
+    height: 100px;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    box-shadow: 0 0 10px rgba(33, 32, 32, 0.05);
+  }
