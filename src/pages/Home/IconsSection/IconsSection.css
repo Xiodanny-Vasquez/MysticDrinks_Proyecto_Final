@@ -3,9 +3,9 @@
   justify-content: space-evenly;
   align-items: center;
   background-color: #272626;
-  padding: 20px;
+  padding: 50px;
   flex-wrap: wrap; /* Allows wrapping for smaller screens */
-  gap: 20px; /* Adds space between items when wrapped */
+  gap: 80px; /* Adds space between items when wrapped */
 }
 
 .icon-item {
@@ -26,7 +26,7 @@
   font-size: 1.2rem;
   margin: 0;
   font-family: var(--secondary-font);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* Responsive styling */

@@ -1,66 +1,98 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { fetchCocktails } from '../../../services/cocktailAPI';
-import './Carousel.css';
+import React, { useEffect, useState, useRef } from "react";
+import { fetchLimitedCocktails } from "../../../services/cocktailAPI";
+import { Link } from "react-router-dom";
+import "./Carousel.css";
 
-export const Carousel1 = () => {
-  const navigate = useNavigate();
+function Carousel() {
   const [cocktails, setCocktails] = useState([]);
-  const [current, setCurrent] = useState(2);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    const loadData = async () => {
-      const result = await fetchCocktails(["margarita", "daiquiri", "mojito", "bloody mary", "pina colada"]);
-      setCocktails(result);
+    const fetchData = async () => {
+      try {
+        const data = await fetchLimitedCocktails(5);
+        setCocktails(data);
+      } catch (error) {
+        console.error("Error cargando cócteles:", error);
+      }
     };
-    loadData();
+    fetchData();
   }, []);
 
-  const prevSlide = () => {
-    setCurrent((prev) => (prev - 1 + cocktails.length) % cocktails.length);
+  useEffect(() => {
+    startAutoSlide();
+    return () => stopAutoSlide();
+  }, [cocktails]);
+
+  const startAutoSlide = () => {
+    stopAutoSlide();
+    intervalRef.current = setInterval(() => {
+      nextSlide();
+    }, 3000);
+  };
+
+  const stopAutoSlide = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
   };
 
   const nextSlide = () => {
-    setCurrent((prev) => (prev + 1) % cocktails.length);
+    setCurrentIndex((prev) => (prev + 1) % cocktails.length);
   };
 
-  useEffect(() => {
-    const interval = setInterval(nextSlide, 4000);
-    return () => clearInterval(interval);
-  }, [cocktails, current]);
-
-  const handleClick = (idDrink) => {
-    navigate(`/cocktail/${idDrink}`);
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + cocktails.length) % cocktails.length);
   };
 
-  if (!cocktails.length) return null;
+  const getSlideClass = (index) => {
+    if (index === currentIndex) return "slide active";
+    if (index === (currentIndex - 1 + cocktails.length) % cocktails.length) return "slide left";
+    if (index === (currentIndex + 1) % cocktails.length) return "slide right";
+    return "slide hidden";
+  };
+
+  if (cocktails.length === 0) return <p>Cargando carrusel...</p>;
 
   return (
-    <div className="coverflow-carousel">
-      <button className="nav left" onClick={prevSlide}>‹</button>
+    <div
+      className="coverflow-carousel"
+      onMouseEnter={stopAutoSlide}
+      onMouseLeave={startAutoSlide}
+    >
       <div className="slides">
-        {cocktails.map((card, i) => {
-          const offset = i - current;
-          let className = 'slide';
-          if (offset === 0) className += ' active';
-          else if (offset === -1 || offset === cocktails.length - 1) className += ' left';
-          else if (offset === 1 || offset === -(cocktails.length - 1)) className += ' right';
-          else className += ' hidden';
-
-          return (
-            <div
-              key={card.idDrink}
-              className={className}
-              onClick={() => handleClick(card.idDrink)}
-              style={{ cursor: 'pointer' }}
-            >
-              <img src={card.strDrinkThumb} alt={card.strDrink} className="carousel1-img" />
-              <h3>{card.strDrink}</h3>
-            </div>
-          );
-        })}
+        {cocktails.map((cocktail, index) => (
+          <div key={cocktail.idDrink} className={getSlideClass(index)}>
+            <Link to={`/cocktail/${cocktail.idDrink}`} state={{ price: "$15.00" }}>
+              <img
+                src={cocktail.strDrinkThumb}
+                alt={cocktail.strDrink}
+                className="carousel1-img"
+              />
+              <p>{cocktail.strDrink}</p>
+            </Link>
+          </div>
+        ))}
       </div>
-      <button className="nav right" onClick={nextSlide}>›</button>
+      <button
+        className="nav left"
+        onClick={(e) => {
+          e.preventDefault();
+          prevSlide();
+        }}
+      >
+        &#8249;
+      </button>
+      <button
+        className="nav right"
+        onClick={(e) => {
+          e.preventDefault();
+          nextSlide();
+        }}
+      >
+        &#8250;
+      </button>
     </div>
   );
-};
+}
+
+export default Carousel;

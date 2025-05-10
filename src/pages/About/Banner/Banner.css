@@ -1,9 +1,10 @@
 .Banner-section {
   background: linear-gradient(
     45deg,
-    rgb(255, 64, 5),
-    rgb(41, 34, 11),
-    rgb(0, 0, 0),
+    rgb(255, 0, 0),
+    rgb(158, 41, 5),
+    rgb(71, 21, 6),
+    rgb(15, 7, 4),
     rgb(0, 0, 0)
   );
   height: 150px;

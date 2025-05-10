@@ -9,7 +9,7 @@
   .contact-page h1 {
     font-family: var(--primary-font);
     font-size: 2.8rem;
-    color: #BF9D5F;
+    color: #fe7200;
     margin: 2rem 0rem 3rem ;
 
   }
@@ -55,7 +55,7 @@
     text-align: center;
     font-family: var(--primary-font);
     font-size: 1.5rem;
-    color: #ffae42;
+    color: #ff6842;
 
   }
   
@@ -63,7 +63,7 @@
     width: 100%;
     padding: 0.8rem;
     margin-bottom: 1rem;
-    border: 2px solid rgba(191, 157, 95, 0.71);
+    border: 2px solid rgba(249, 135, 4, 0.71);
     background-color: transparent;
     border-radius: 5px;
   }
@@ -71,7 +71,7 @@
   .contact-form button {
     width: 45%;
     padding: 0.8rem;
-    background-color: #902602;
+    background-color: #f84f16;
     color: white;
     font-family: var(--botones-font);
     font-size: 1rem;
@@ -90,7 +90,8 @@
   }
   
   .contact-info p strong {
-    color: #ffae42;
+    color: #ff6842;
+    
   }
 
   /* Media Queries for Responsiveness */

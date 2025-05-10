@@ -1,34 +1,35 @@
-/* ==== Coverflow Carousel 3D (Mejorado) ==== */
+/* ==== Coverflow Carousel 3D (Compacto, Centrado, Botones Separados) ==== */
+
 .coverflow-carousel {
   position: relative;
   width: 100%;
-  max-width: 1000px;
-  margin: 80px auto;
-  perspective: 1200px;
+  max-width: 700px;
+  margin: 150px auto;
+  perspective: 1000px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 1rem;
 }
 
 .slides {
   position: relative;
   width: 100%;
-  height: 340px;
+  height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* Estilo base de cada slide */
 .slide {
   position: absolute;
-  width: 240px;
-  height: 320px;
-  padding: 16px;
-  background: #1d1b1b;
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(255, 183, 0, 0.5);
-  transition: all 0.6s ease;
+  width: 250px;
+  height: 400px;
+  padding: 10px;
+  background: rgba(91, 90, 90, 0.334);
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(85, 65, 65, 0.896);
+  transition: transform 0.6s ease, opacity 0.6s ease, height 0.6s ease;
   opacity: 0;
   transform: scale(0.7);
   z-index: 0;
@@ -38,110 +39,114 @@
   justify-content: flex-start;
 }
 
+/* Slide activo centrado */
 .slide.active {
   opacity: 1;
   transform: scale(1) translateZ(0);
   z-index: 3;
-  height: 360px;
+  height: 400px;
 }
 
+/* Slide a la izquierda */
 .slide.left {
-  transform: translateX(-220px) rotateY(25deg) scale(0.8);
-  opacity: 0.6;
-  z-index: 2;
+  transform: translateX(-220px) rotateY(30deg) scale(0.8);
+  opacity: 0.7;
+  z-index: 3;
 }
 
+/* Slide a la derecha */
 .slide.right {
-  transform: translateX(220px) rotateY(-25deg) scale(0.8);
-  opacity: 0.6;
-  z-index: 2;
+  transform: translateX(220px) rotateY(-30deg) scale(0.8);
+  opacity: 0.7;
+  z-index: 3;
 }
 
+/* Ocultar slides que no están visibles */
 .slide.hidden {
   opacity: 0;
   pointer-events: none;
   z-index: 1;
 }
 
+/* Imagen dentro del slide */
 .carousel1-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 0.75rem;
-  margin-bottom: 0.8rem;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  display: block;
 }
 
-.slide h3 {
-  margin: 0;
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 1.1rem;
-  color: #ff3c3c;
+/* Título del cóctel */
+.slide p {
+  margin: 10px;
+  font-family: serif;
+  font-size: 10px;
+  color: #000000;
   text-align: center;
 }
 
-.nav {
-  background: none;
-  border: none;
-  font-size: 3rem;
+/* Precio o información adicional */
+.slide p {
+  font-family: serif;
+  font-size: 22px;
   color: #ffffff;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* Botones de navegación */
+.nav {
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid #494747c9;
+  border-radius: 10px;
+  font-size: 2rem;
+  color: white;
   cursor: pointer;
-  z-index: 5;
+  z-index: 4;
+  transition: all 0.3s ease;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  transition: color 0.3s, transform 0.2s;
+  padding: 10px 15px;
 }
 
 .nav:hover {
-  color: #ff0000;
-  transform: scale(1.1) translateY(-50%);
+  background: #494141;
+  color: black;
 }
 
+/* Posiciones separadas para los botones */
 .nav.left {
-  left: 10px;
+  left: -80px;
 }
 
 .nav.right {
-  right: 10px;
+  right: -80px;
 }
 
-/* ===== Responsive Styles ===== */
+/* Adaptabilidad para móviles */
 @media (max-width: 768px) {
-  .slide {
-    width: 180px;
-    height: 260px;
-  }
-
-  .slide.active {
-    height: 280px;
-  }
-
-  .slide.left,
-  .slide.right {
-    transform: translateX(160px) rotateY(15deg) scale(0.8);
-  }
-}
-
-@media (max-width: 480px) {
-  .nav {
-    font-size: 2.5rem;
+  .coverflow-carousel {
+    max-width: 100%;
+    margin: 60px auto;
   }
 
   .slide {
-    width: 140px;
-    height: 200px;
+    width: 260px;
+    height: 400px;
   }
 
   .slide.active {
-    height: 220px;
+    height: 440px;
   }
 
-  .carousel1-img {
-    margin-bottom: 0.5rem;
+  .nav.left {
+    left: -50px;
   }
 
-  .slide h3 {
-    font-size: 0.9rem;
+  .nav.right {
+    right: -50px;
   }
 }
