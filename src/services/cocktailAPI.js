@@ -12,6 +12,7 @@ export const fetchCocktails = async (cocktailNames) => {
     return results.flat();
   } catch (error) {
     console.error("Error mostrando cocteles:", error);
+  
     throw error;
   }
 };

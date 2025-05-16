@@ -21,6 +21,7 @@ function Login({ onToggle }) {
               Ingresar
             </button>
           </form>
+          <br></br>
           <Link to="/register" className="toggle-link">
             Nuevo Usuario
           </Link>

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Footer.css';
-import facebookIcon from '../../../assets/Facebook.png';
-import instagramIcon from '../../../assets/Instagram.png';
+import facebookIcon from '../../../assets/icons-facebook.png';
+import instagramIcon from '../../../assets/icons-instagram.png';
 import logoMystic from "../../../assets/logo-mystic.png";
 
 function FooterSection() {

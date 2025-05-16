@@ -10,11 +10,13 @@ function Register() {
           <h2>Haz parte de nuestra Barra Exclusiva</h2>
           <form>
             <label>Nombre</label>
-            <input type="text" placeholder="Nombre" />
+            <input type="text" placeholder="Nombre" required /> 
             <label>Correo electrónico</label>
-            <input type="email" placeholder="Correo electrónico" />
+            <input type="email" placeholder="Correo electrónico" required />
+            <label>Edad</label>
+            <input type="number" placeholder="edad" required />
             <label>Contraseña</label>
-            <input type="password" placeholder="Contraseña" />
+            <input type="password" placeholder="Contraseña" required />
             <button type="submit" className="register-btn">Unirme</button>
           </form>
         </div>

@@ -46,9 +46,12 @@ function App() {
             </Routes>
           </div>
         </div>
-        <FooterSection />
+         <FooterSection />
       </BrowserRouter>
     </CartProvider>
+
+  
+ 
   );
 }
 
