@@ -11,8 +11,8 @@ function HeroSection() {
       <Container>
         <h1 className="">MYSTIC DRINKS</h1>
         <p className="lead fs-4">Donde cada trago cuenta una historia.</p>
-        <Link to="/productos">
-         <Carousel />
+        <Carousel />
+        <Link to="/Productos">
           <Button className="btn" variant="secondary" size="lg">
             Explora nuestros cocteles exclusivos
           </Button>
