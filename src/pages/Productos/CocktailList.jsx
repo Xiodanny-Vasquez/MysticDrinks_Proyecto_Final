@@ -94,7 +94,7 @@ function CocktailList() {
 const SearchHeader = ({ searchQuery, onSearchChange, onIngredientChange, onAlcoholicChange }) => (
   <div className="search-header text-center py-5">
     <div className="container">
-      <h1 className="mb-2 cursive-font">¿Tienes un coctel favorito?</h1>
+      <h1 className="mb-2 cursive-font">¿Tienes un Cóctel favorito?</h1>
       <p className="text-white mb-4 fs-5">Estamos seguros de que aquí lo encontrarás</p>
       <SearchInput searchQuery={searchQuery} onSearchChange={onSearchChange} />
       <div className="row justify-content-center mt-2">
