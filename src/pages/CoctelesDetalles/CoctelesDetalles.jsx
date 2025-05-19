@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import { fetchCocktailById } from "../../services/cocktailAPI";
 import "./CoctelesDetalles.css";
 import CoctelSpinner from "../../components/CoctelSpinner";
 import { useCart } from "../Shopping-cart/Hooks/useCart";
-import { Link } from "react-router-dom";
 
 function CoctelesDetalles() {
   const { idDrink } = useParams();
   const { addToCart } = useCart();
   const location = useLocation();
+
   const [cocktail, setCocktail] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -61,12 +61,7 @@ function CoctelesDetalles() {
     return ingredients;
   };
 
-  if (loading)
-    return (
-      <p>
-        <CoctelSpinner />
-      </p>
-    );
+  if (loading) return <p><CoctelSpinner /></p>;
   if (error) return <p>{error}</p>;
 
   const ingredients = getIngredients(cocktail);
@@ -119,6 +114,8 @@ function CoctelesDetalles() {
               </div>
               <h5 className="fw-bolder">Instructions</h5>
               <p className="lead">{cocktail.strInstructions}</p>
+
+              {/* Sección de cantidad y botón */}
               <div className="d-flex">
                 <input
                   className="form-control text-center me-3"
@@ -134,7 +131,10 @@ function CoctelesDetalles() {
                     className="btn btn-outline-light flex-shrink-0"
                     type="button"
                     onClick={() => {
-                      addToCart(cocktail);
+                      addToCart({
+                        ...cocktail,
+                        quantity: parseInt(quantity)
+                      });
                     }}
                   >
                     <i className="bi-cart-fill me-1"></i>
@@ -142,6 +142,7 @@ function CoctelesDetalles() {
                   </button>
                 </Link>
               </div>
+
             </div>
           </div>
         </div>

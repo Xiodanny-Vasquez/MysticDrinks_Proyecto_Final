@@ -6,50 +6,66 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
   const addToCart = (cocktail) => {
-    if (!cocktail.idDrink || !cocktail.strDrink || !cocktail.strDrinkThumb || !cocktail.price) {
+    // Validación de campos esenciales
+    if (
+      !cocktail.idDrink ||
+      !cocktail.strDrink ||
+      !cocktail.strDrinkThumb ||
+      !cocktail.price
+    ) {
       console.error("Error: Datos incompletos en el producto:", cocktail);
-      return; // Evita agregar productos incompletos
+      return;
     }
-    //'setCart' funcion que toma a 'prevCart' como argumento para mostar el estado m
+
+    // Parseamos la cantidad para asegurarnos que sea número
+    const quantityToAdd = parseInt(cocktail.quantity) || 1;
+
     setCart((prevCart) => {
-      
       const productInCartIndex = prevCart.findIndex(
         (item) => item.id === cocktail.idDrink
       );
 
       if (productInCartIndex >= 0) {
-        // Si el producto ya está, incrementa la cantidad
-        return prevCart.map((item, index) =>
+        // Si el producto ya está en el carrito
+        const updatedCart = prevCart.map((item, index) =>
           index === productInCartIndex
-            ? { ...item, quantity: item.quantity + 1 }
+            ? {
+              ...item,
+              quantity: item.quantity + quantityToAdd,
+            }
             : item
         );
-      
+
+        // Si la cantidad se reduce a 0 o menos, lo eliminamos del carrito
+        return updatedCart.filter((item) => item.quantity > 0);
       }
 
-      // Si el producto no está en el carrito, lo añade con cantidad inicial de 1
-      return [
-        ...prevCart,
-        {
-          id: cocktail.idDrink,
-          thumbnail: cocktail.strDrinkThumb,
-          title: cocktail.strDrink,
-          price: cocktail.price,
-          quantity: 1,
-        },
-      ];
-    
+      // Si es un producto nuevo y la cantidad es positiva
+      if (quantityToAdd > 0) {
+        return [
+          ...prevCart,
+          {
+            id: cocktail.idDrink,
+            thumbnail: cocktail.strDrinkThumb,
+            title: cocktail.strDrink,
+            price: cocktail.price,
+            quantity: quantityToAdd,
+          },
+        ];
+      }
+
+      // Si se intenta agregar un producto nuevo con cantidad negativa o cero, no lo agregamos
+      return prevCart;
     });
   };
 
   const removeFromCart = (id) => {
-    setCart(cart.filter((item) => item.id !== id));
+    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
   const clearCart = () => {
     setCart([]);
   };
-
 
   return (
     <CartContext.Provider
@@ -57,7 +73,7 @@ export function CartProvider({ children }) {
         cart,
         addToCart,
         clearCart,
-        removeFromCart
+        removeFromCart,
       }}
     >
       {children}

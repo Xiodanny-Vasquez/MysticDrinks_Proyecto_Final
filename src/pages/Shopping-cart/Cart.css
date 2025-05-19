@@ -46,36 +46,45 @@
 /* Estilos responsivos */
 @media (max-width: 768px) {
   .cart {
-    width: 100%; /* Ocupa el ancho completo de la pantalla */
-    flex-direction: column; /* Cambia a columna para apilar los elementos */
+    width: 100%;
+    /* Ocupa el ancho completo de la pantalla */
+    flex-direction: column;
+    /* Cambia a columna para apilar los elementos */
     padding: 1rem;
   }
 
   img {
-    width: 60px; /* Reduce el tamaño de la imagen */
+    width: 60px;
+    /* Reduce el tamaño de la imagen */
     height: 60px;
     margin-bottom: 5px;
   }
 
   h3 {
-    text-align: center; /* Centra el título en pantallas pequeñas */
+    text-align: center;
+    /* Centra el título en pantallas pequeñas */
     margin-bottom: 10px;
-    width: 150px; /* Reduce el tamaño de la imagen */
+    width: 150px;
+    /* Reduce el tamaño de la imagen */
     height: 60px;
   }
 
   p {
     margin-bottom: 1px;
-    flex: 1; /* Ocupa el ancho disponible en la columna */
+    flex: 1;
+    /* Ocupa el ancho disponible en la columna */
     text-align: center;
-    width: 150px; /* Reduce el tamaño de la imagen */
+    width: 150px;
+    /* Reduce el tamaño de la imagen */
     height: 60px;
   }
 
   button {
-    flex: none; /* Elimina la restricción de tamaño para el botón */
+    flex: none;
+    /* Elimina la restricción de tamaño para el botón */
     margin: 0.5rem;
-    font-size: 1rem; /* Reduce el tamaño del botón */
+    font-size: 1rem;
+    /* Reduce el tamaño del botón */
   }
 }
 
@@ -85,14 +94,48 @@
   }
 
   h3 {
-    font-size: 1rem; /* Ajusta el tamaño del texto */
+    font-size: 1rem;
+    /* Ajusta el tamaño del texto */
   }
 
   p {
-    font-size: 0.9rem; /* Ajusta el tamaño del texto en párrafos */
+    font-size: 0.9rem;
+    /* Ajusta el tamaño del texto en párrafos */
   }
 
   button {
-    font-size: 0.9rem; /* Ajusta el tamaño del botón */
+    font-size: 0.9rem;
+    /* Ajusta el tamaño del botón */
   }
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.qty-btn {
+  padding: 0.2rem 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #ff6600;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.qty-btn:hover {
+  background-color: #cc5200;
+}
+
+.qty-value {
+  font-size: 1rem;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+  color: white;
 }
