@@ -1,23 +1,37 @@
 import React from "react";
 import "./Login.css";
 import imgLogo from "../../assets/logo-mystic.png";
-import googleIcon from "../../assets/google-icon.png"; // Asegúrate de tener esta imagen
+import googleIcon from "../../assets/google-icon.png";
 import { Link } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
-function Login({ onToggle }) {
-  const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      const decoded = jwtDecode(tokenResponse.credential);
-      console.log("Usuario autenticado:", decoded);
-      localStorage.setItem("user", JSON.stringify(decoded));
-      window.location.href = "/";
+function Login() {
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        // Obtener datos del usuario desde Google
+        const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+          headers: {
+            Authorization: `Bearer ${tokenResponse.access_token}`,
+          },
+        });
+
+        const userData = res.data;
+        console.log("Usuario autenticado:", userData);
+
+        // Guardar usuario en localStorage
+        localStorage.setItem("user", JSON.stringify(userData));
+
+        // Redireccionar al inicio
+        window.location.href = "/";
+      } catch (error) {
+        console.error("Error al obtener datos del usuario:", error);
+      }
     },
     onError: () => {
       console.error("Error al iniciar sesión con Google");
     },
-    flow: "implicit", // importante para usar credential
   });
 
   return (
@@ -38,12 +52,13 @@ function Login({ onToggle }) {
             </button>
           </form>
 
-          <div className="google-login" style={{ marginTop: "20px" }}>
+          <div className="google-login">
+            <p style={{ marginTop: "20px" }}></p>
             <img
               src={googleIcon}
               alt="Iniciar sesión con Google"
-              style={{ width: "40px", cursor: "pointer" }}
-              onClick={() => login()}
+              style={{ width: "40px", cursor: "pointer", marginTop: "10px" }}
+              onClick={() => loginWithGoogle()}
             />
           </div>
 

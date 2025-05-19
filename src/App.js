@@ -15,6 +15,7 @@ import CocktailQuestionnaire from "./pages/Home/QuizRecomendacion/CocktailRecomm
 import "./customTheme.css";
 import UsersList from './pages/Backend/UserList';
 
+
 function App() {
   return (
     <CartProvider>
@@ -31,7 +32,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/quiz" element={<CocktailQuestionnaire />} />
             <Route path="/cocktail/:idDrink" element={<CoctelesDetalles />} />
-            <Route path="/usuarios" element={<UsersList />} />
+            <Route path="/usuarios" element={<UsersList />} />  
             <Route
               path="*"
               element={
