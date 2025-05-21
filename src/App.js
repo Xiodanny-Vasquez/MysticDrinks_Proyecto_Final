@@ -13,7 +13,6 @@ import NavBar from "./pages/Home/Navbar/NavBar";
 import FooterSection from "./pages/Home/Footer/FooterSection";
 import CocktailQuestionnaire from "./pages/Home/QuizRecomendacion/CocktailRecommender";
 import "./customTheme.css";
-import UsersList from './pages/Backend/UserList';
 
 
 function App() {
@@ -31,8 +30,7 @@ function App() {
             <Route path="/account" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/quiz" element={<CocktailQuestionnaire />} />
-            <Route path="/cocktail/:idDrink" element={<CoctelesDetalles />} />
-            <Route path="/usuarios" element={<UsersList />} />  
+            <Route path="/cocktail/:idDrink" element={<CoctelesDetalles />} /> 
             <Route
               path="*"
               element={
