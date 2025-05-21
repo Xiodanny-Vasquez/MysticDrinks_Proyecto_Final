@@ -1,53 +1,52 @@
-const BASE_URL = "https://www.thecocktaildb.com/api/json/v1/1/";
+const API_BASE_URL = "/api";
 
-export const fetchCocktails = async (cocktailNames) => {
+// Función para mezclar aleatoriamente un array (algoritmo de Fisher-Yates)
+function shuffleArray(array) {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+export async function fetchLimitedCocktails(limit = 5) {
   try {
-    const results = await Promise.all(
-      cocktailNames.map((name) =>
-        fetch(`${BASE_URL}search.php?s=${name}`)
-          .then((response) => response.json())
-          .then((data) => data.drinks || [])
-      )
-    );
-    return results.flat();
+    const response = await fetch(`${API_BASE_URL}/filter.php?c=Cocktail`);
+    if (!response.ok) throw new Error("Error fetching cocktails");
+    const data = await response.json();
+    if (!data.drinks) return [];
+
+    const shuffled = shuffleArray(data.drinks);
+    return shuffled.slice(0, limit);
   } catch (error) {
-    console.error("Error mostrando cocteles:", error);
-  
+    console.error("fetchLimitedCocktails error:", error);
     throw error;
   }
-};
+}
 
-
-export const fetchCocktailById = async (idDrink) => {
+export async function fetchAllCocktails(minLimit = 50) {
   try {
-    const response = await fetch(`${BASE_URL}lookup.php?i=${idDrink}`);
+    const response = await fetch(`${API_BASE_URL}/filter.php?c=Cocktail`);
+    if (!response.ok) throw new Error("Error fetching cocktails");
+    const data = await response.json();
+    if (!data.drinks) return [];
+
+    const shuffled = shuffleArray(data.drinks);
+    return shuffled.slice(0, minLimit);
+  } catch (error) {
+    console.error("fetchAllCocktails error:", error);
+    throw error;
+  }
+}
+
+export const fetchCocktailById = async (id) => {
+  try {
+    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
     const data = await response.json();
     return data.drinks ? data.drinks[0] : null;
   } catch (error) {
-    console.error("Error mostrando detalles de coctel:", error);
-    throw error;
-  }
-};
-
-
-export const fetchLimitedCocktails = async (limit = 52) => {
-  try {
-    // Fetch cocktails for each letter in the alphabet
-    const cocktails = await Promise.all(
-      'abcdefghijklmnopqrstuvwxyz'.split('').map(async (letter) => {
-        const response = await fetch(`${BASE_URL}/search.php?f=${letter}`);
-        const { drinks } = await response.json();
-        return drinks || [];
-      })
-    );
-
-    // Flatten the array and shuffle the cocktails
-    const flattenedCocktails = cocktails.flat().sort(() => 0.5 - Math.random());
-
-    // Return the first `limit` cocktails
-    return flattenedCocktails.slice(0, limit);
-  } catch (error) {
-    console.error('Error fetching limited cocktails:', error);
+    console.error("Error al obtener cóctel por ID:", error);
     throw error;
   }
 };
