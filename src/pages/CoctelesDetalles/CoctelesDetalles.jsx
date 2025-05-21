@@ -4,6 +4,7 @@ import { fetchCocktailById } from "../../services/cocktailAPI";
 import "./CoctelesDetalles.css";
 import CoctelSpinner from "../../components/CoctelSpinner";
 import { useCart } from "../Shopping-cart/Hooks/useCart";
+import { toast } from "react-toastify";
 
 function CoctelesDetalles() {
   const { idDrink } = useParams();
@@ -61,6 +62,15 @@ function CoctelesDetalles() {
     return ingredients;
   };
 
+  const handleAddToCart = () => {
+    addToCart({
+      ...cocktail,
+      quantity: parseInt(quantity),
+    });
+
+    toast.success(`¡${cocktail.strDrink} ha sido agregado al carrito!`);
+  };
+
   if (loading) return <p><CoctelSpinner /></p>;
   if (error) return <p>{error}</p>;
 
@@ -82,33 +92,33 @@ function CoctelesDetalles() {
             <div className="fs-5 mb-5">
               <span className="ms-2">{cocktail.price}</span>
             </div>
-            <div>
-              <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-5 mb-5">
-                {ingredients.map((ingredient, index) => (
-                  <div key={index} className="col">
-                    <div className="h-100 bg-transparent text-white text-center">
-                      <div
-                        className="mb-3"
-                        style={{
-                          height: "100px",
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      >
-                        <img
-                          src={ingredient.image}
-                          alt={ingredient.name}
-                          className="img-fluid"
-                          style={{ maxHeight: "100%" }}
-                        />
-                      </div>
-                      <h6 className="card-title">{ingredient.name}</h6>
-                      <p className="card-text text-secondary">{ingredient.measure}</p>
+
+            <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-5 mb-5">
+              {ingredients.map((ingredient, index) => (
+                <div key={index} className="col">
+                  <div className="h-100 bg-transparent text-white text-center">
+                    <div
+                      className="mb-3"
+                      style={{
+                        height: "100px",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <img
+                        src={ingredient.image}
+                        alt={ingredient.name}
+                        className="img-fluid"
+                        style={{ maxHeight: "100%" }}
+                      />
                     </div>
+                    <h6 className="card-title">{ingredient.name}</h6>
+                    <p className="card-text text-secondary">{ingredient.measure}</p>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
+
             <h5 className="fw-bolder">Instructions</h5>
             <p className="lead">{cocktail.strInstructions}</p>
 
@@ -122,21 +132,14 @@ function CoctelesDetalles() {
                 min="1"
                 style={{ maxWidth: "3rem" }}
               />
-              <Link to="/cart">
-                <button
-                  className="btn btn-outline-light flex-shrink-0"
-                  type="button"
-                  onClick={() => {
-                    addToCart({
-                      ...cocktail,
-                      quantity: parseInt(quantity),
-                    });
-                  }}
-                >
-                  <i className="bi-cart-fill me-1"></i>
-                  Add to cart
-                </button>
-              </Link>
+              <button
+                className="btn btn-outline-light flex-shrink-0"
+                type="button"
+                onClick={handleAddToCart}
+              >
+                <i className="bi-cart-fill me-1"></i>
+                Agregar al carrito
+              </button>
             </div>
           </div>
         </div>
