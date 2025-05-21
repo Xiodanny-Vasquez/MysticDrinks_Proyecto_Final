@@ -4,6 +4,7 @@ import { fetchCocktailById } from "../../services/cocktailAPI";
 import "./CoctelesDetalles.css";
 import CoctelSpinner from "../../components/CoctelSpinner";
 import { useCart } from "../Shopping-cart/Hooks/useCart";
+import { toast } from "react-toastify";
 
 function CoctelesDetalles() {
   const { idDrink } = useParams();
@@ -61,93 +62,89 @@ function CoctelesDetalles() {
     return ingredients;
   };
 
+  const handleAddToCart = () => {
+    addToCart({
+      ...cocktail,
+      quantity: parseInt(quantity),
+    });
+
+    toast.success(`¡${cocktail.strDrink} ha sido agregado al carrito!`);
+  };
+
   if (loading) return <p><CoctelSpinner /></p>;
   if (error) return <p>{error}</p>;
 
   const ingredients = getIngredients(cocktail);
 
   return (
-    <>
-      <section className="py-5">
-        <div className="container px-4 px-lg-5 my-5">
-          <div className="row gx-4 gx-lg-5 align-items-center">
-            <div className="col-md-6">
-              <img
-                className="card-img-top mb-5 mb-md-0 rounded"
-                src={cocktail.strDrinkThumb}
-                alt={cocktail.strDrink}
-              />
+    <section className="py-5">
+      <div className="container px-4 px-lg-5 my-5">
+        <div className="row gx-4 gx-lg-5 align-items-center">
+          <div className="col-md-6">
+            <img
+              className="card-img-top mb-5 mb-md-0 rounded"
+              src={cocktail.strDrinkThumb}
+              alt={cocktail.strDrink}
+            />
+          </div>
+          <div className="col-md-6">
+            <h1 className="display-5 fw-bolder">{cocktail.strDrink}</h1>
+            <div className="fs-5 mb-5">
+              <span className="ms-2">{cocktail.price}</span>
             </div>
-            <div className="col-md-6">
-              <h1 className="display-5 fw-bolder">{cocktail.strDrink}</h1>
-              <div className="fs-5 mb-5">
-                <span className="ms-2">{cocktail.price}</span>
-              </div>
-              <div>
-                <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-5 mb-5">
-                  {ingredients.map((ingredient, index) => (
-                    <div key={index} className="col">
-                      <div className="h-100 bg-transparent text-white text-center">
-                        <div className="card-body d-flex flex-column align-items-center">
-                          <div
-                            className="mb-3"
-                            style={{
-                              height: "100px",
-                              display: "flex",
-                              alignItems: "center",
-                            }}
-                          >
-                            <img
-                              src={ingredient.image}
-                              alt={ingredient.name}
-                              className="img-fluid"
-                              style={{ maxHeight: "100%" }}
-                            />
-                          </div>
-                          <h6 className="card-title">{ingredient.name}</h6>
-                          <p className="card-text text-secondary">{ingredient.measure}</p>
-                        </div>
-                      </div>
+
+            <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-5 mb-5">
+              {ingredients.map((ingredient, index) => (
+                <div key={index} className="col">
+                  <div className="h-100 bg-transparent text-white text-center">
+                    <div
+                      className="mb-3"
+                      style={{
+                        height: "100px",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <img
+                        src={ingredient.image}
+                        alt={ingredient.name}
+                        className="img-fluid"
+                        style={{ maxHeight: "100%" }}
+                      />
                     </div>
-                  ))}
+                    <h6 className="card-title">{ingredient.name}</h6>
+                    <p className="card-text text-secondary">{ingredient.measure}</p>
+                  </div>
                 </div>
-              </div>
-              <h5 className="fw-bolder">Instructions</h5>
-              <p className="lead">{cocktail.strInstructions}</p>
+              ))}
+            </div>
 
-              {/* Sección de cantidad y botón */}
-              <div className="d-flex">
-                <input
-                  className="form-control text-center me-3"
-                  id="inputQuantity"
-                  type="number"
-                  value={quantity}
-                  onChange={handleQuantityChange}
-                  min="1"
-                  style={{ maxWidth: "3rem" }}
-                />
-                <Link to="/cart">
-                  <button
-                    className="btn btn-outline-light flex-shrink-0"
-                    type="button"
-                    onClick={() => {
-                      addToCart({
-                        ...cocktail,
-                        quantity: parseInt(quantity)
-                      });
-                    }}
-                  >
-                    <i className="bi-cart-fill me-1"></i>
-                    Add to cart
-                  </button>
-                </Link>
-              </div>
+            <h5 className="fw-bolder">Instructions</h5>
+            <p className="lead">{cocktail.strInstructions}</p>
 
+            <div className="d-flex">
+              <input
+                className="form-control text-center me-3"
+                id="inputQuantity"
+                type="number"
+                value={quantity}
+                onChange={handleQuantityChange}
+                min="1"
+                style={{ maxWidth: "3rem" }}
+              />
+              <button
+                className="btn btn-outline-light flex-shrink-0"
+                type="button"
+                onClick={handleAddToCart}
+              >
+                <i className="bi-cart-fill me-1"></i>
+                Agregar al carrito
+              </button>
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 

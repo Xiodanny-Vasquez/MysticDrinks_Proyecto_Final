@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from "react";
 import { fetchLimitedCocktails } from "../../../services/cocktailAPI";
 import { Link } from "react-router-dom";
@@ -21,15 +22,16 @@ function Carousel() {
   }, []);
 
   useEffect(() => {
-    startAutoSlide();
+    if (cocktails.length > 0) {
+      startAutoSlide();
+    }
     return () => stopAutoSlide();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cocktails]);
 
   const startAutoSlide = () => {
     stopAutoSlide();
     intervalRef.current = setInterval(() => {
-      nextSlide();
+      setCurrentIndex((prev) => (prev + 1) % cocktails.length);
     }, 3000);
   };
 
@@ -37,12 +39,12 @@ function Carousel() {
     if (intervalRef.current) clearInterval(intervalRef.current);
   };
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % cocktails.length);
-  };
-
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev - 1 + cocktails.length) % cocktails.length);
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % cocktails.length);
   };
 
   const getSlideClass = (index) => {
@@ -60,6 +62,8 @@ function Carousel() {
       onMouseEnter={stopAutoSlide}
       onMouseLeave={startAutoSlide}
     >
+      <button className="nav left" onClick={prevSlide}>&#8249;</button>
+
       <div className="slides">
         {cocktails.map((cocktail, index) => (
           <div key={cocktail.idDrink} className={getSlideClass(index)}>
@@ -74,24 +78,8 @@ function Carousel() {
           </div>
         ))}
       </div>
-      <button
-        className="nav left"
-        onClick={(e) => {
-          e.preventDefault();
-          prevSlide();
-        }}
-      >
-        &#8249;
-      </button>
-      <button
-        className="nav right"
-        onClick={(e) => {
-          e.preventDefault();
-          nextSlide();
-        }}
-      >
-        &#8250;
-      </button>
+
+      <button className="nav right" onClick={nextSlide}>&#8250;</button>
     </div>
   );
 }

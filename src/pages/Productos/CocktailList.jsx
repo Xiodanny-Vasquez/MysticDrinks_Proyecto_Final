@@ -1,14 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react"; 
-import { fetchCocktails } from "../../services/cocktailAPI";
 import { fetchLimitedCocktails } from "../../services/cocktailAPI";
 import CoctelCard from "../../components/CoctelCard";
 import "./CocktailList.css";
 import CoctelSpinner from "../../components/CoctelSpinner";
 import { Search } from "lucide-react";
-import Dropdown from "../../components/Dropdown";
 
-
-const COCKTAIL_NAMES = ["margarita", "daiquiri", "gin tonic", "mojito", "bloody mary", "americano", "Mimosa", "Pina Colada"];
 
 function CocktailList() {
   const [cocktails, setCocktails] = useState([]);
@@ -67,12 +64,11 @@ function CocktailList() {
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
     const matchesIngredient = ingredientFilter
-      ? cocktail.strIngredient1?.toLowerCase() === ingredientFilter.toLowerCase() ||
-        cocktail.strIngredient2?.toLowerCase() === ingredientFilter.toLowerCase() ||
-        cocktail.strIngredient3?.toLowerCase() === ingredientFilter.toLowerCase()
+      ? [cocktail.strIngredient1, cocktail.strIngredient2, cocktail.strIngredient3]
+          .some((ing) => ing?.toLowerCase() === ingredientFilter.toLowerCase())
       : true;
     const matchesAlcoholic = alcoholicFilter
-      ? cocktail.strAlcoholic.toLowerCase() === alcoholicFilter.toLowerCase()
+      ? cocktail.strAlcoholic?.toLowerCase() === alcoholicFilter.toLowerCase()
       : true;
 
     return matchesSearch && matchesIngredient && matchesAlcoholic;
@@ -97,14 +93,6 @@ const SearchHeader = ({ searchQuery, onSearchChange, onIngredientChange, onAlcoh
       <h1 className="mb-2 cursive-font">¿Tienes un Cóctel favorito?</h1>
       <p className="text-white mb-4 fs-5">Estamos seguros de que aquí lo encontrarás</p>
       <SearchInput searchQuery={searchQuery} onSearchChange={onSearchChange} />
-      <div className="row justify-content-center mt-2">
-        <div className="col-auto">
-          <IngredientDropdown onIngredientChange={onIngredientChange} />
-        </div>
-        <div className="col-auto">
-          <AlcoholicDropdown onAlcoholicChange={onAlcoholicChange} />
-        </div>
-      </div>
     </div>
   </div>
 );
@@ -127,22 +115,6 @@ const SearchInput = ({ searchQuery, onSearchChange }) => (
       </div>
     </div>
   </div>
-);
-
-const IngredientDropdown = ({ onIngredientChange }) => (
-  <Dropdown
-    title="Ingrediente"
-    options={["Vodka", "Gin", "Rum", "Tequila"]}
-    onSelect={onIngredientChange}
-  />
-);
-
-const AlcoholicDropdown = ({ onAlcoholicChange }) => (
-  <Dropdown
-    title="Tipo"
-    options={["Alcoholic", "Non-Alcoholic"]}
-    onSelect={onAlcoholicChange}
-  />
 );
 
 const CocktailContent = ({ loading, error, cocktails }) => (

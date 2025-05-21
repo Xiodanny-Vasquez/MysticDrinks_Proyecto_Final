@@ -1,5 +1,22 @@
 {
+<<<<<<< HEAD
   "dependencies": {
     "express": "^5.1.0"
+=======
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "node-fetch": "^3.3.2"
+>>>>>>> 396d64d5a69b06146da2360ba54496de099a21a3
   }
 }
