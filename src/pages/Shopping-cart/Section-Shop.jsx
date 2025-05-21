@@ -22,7 +22,7 @@ function SectionShop() {
           <div className="shop-cart">
             <Cart />
             <div className="section-summary">
-              <Summary />
+            <Summary />
             </div>
           </div>
         </div>

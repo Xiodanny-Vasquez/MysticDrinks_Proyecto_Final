@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom"; // ⬅️ sólo esto, sin BrowserRouter
 import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
@@ -12,12 +12,9 @@ import Register from "./pages/Auth/Register";
 import NavBar from "./pages/Home/Navbar/NavBar";
 import FooterSection from "./pages/Home/Footer/FooterSection";
 import CocktailQuestionnaire from "./pages/Home/QuizRecomendacion/CocktailRecommender";
-
 import "./customTheme.css";
+import UsersList from './pages/Backend/UserList';
 
-// ✅ Agrega estos imports para Toastify
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -35,6 +32,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/quiz" element={<CocktailQuestionnaire />} />
             <Route path="/cocktail/:idDrink" element={<CoctelesDetalles />} />
+            <Route path="/usuarios" element={<UsersList />} />  
             <Route
               path="*"
               element={
@@ -49,9 +47,6 @@ function App() {
           </Routes>
         </div>
         <FooterSection />
-
-        {/* ✅ Contenedor de alertas visuales */}
-        <ToastContainer position="top-right" autoClose={2000} />
       </div>
     </CartProvider>
   );

@@ -24,7 +24,7 @@
   align-items: center;
   margin-left: 2.8rem;
   margin-bottom: 1rem;
-  padding: 0 1rem;
+  padding: 0 1rem; 
 }
 
 .Header p {
@@ -33,7 +33,7 @@
 
 .Header .set-right {
   margin-left: auto;
-  padding-right: 1rem;
+  padding-right: 1rem; 
 }
 
 .shop-cart {
@@ -41,20 +41,4 @@
   flex-direction: row;
   align-items: stretch;
   flex-wrap: wrap;
-}
-
-.shop-cart-flex {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
-
-.cart-column {
-  flex: 2;
-  min-width: 300px;
-}
-
-.summary-column {
-  flex: 1;
-  min-width: 250px;
 }
