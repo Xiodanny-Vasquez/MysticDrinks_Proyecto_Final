@@ -4,6 +4,7 @@ import { fetchCocktailById } from "../../services/cocktailAPI";
 import "./CoctelesDetalles.css";
 import CoctelSpinner from "../../components/CoctelSpinner";
 import { useCart } from "../Shopping-cart/Hooks/useCart";
+import { toast } from 'react-toastify'; // ✅ Importar el toast
 
 function CoctelesDetalles() {
   const { idDrink } = useParams();
@@ -133,8 +134,9 @@ function CoctelesDetalles() {
                     onClick={() => {
                       addToCart({
                         ...cocktail,
-                        quantity: parseInt(quantity)
+                        quantity: parseInt(quantity),
                       });
+                      toast.success(`✅ ¡${cocktail.strDrink} ha sido agregado al carrito!`);
                     }}
                   >
                     <i className="bi-cart-fill me-1"></i>

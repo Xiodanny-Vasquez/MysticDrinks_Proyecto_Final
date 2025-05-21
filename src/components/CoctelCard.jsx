@@ -2,15 +2,28 @@ import React from "react";
 import "./CoctelCard.css";
 import { useCart } from "../pages/Shopping-cart/Hooks/useCart";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"; // 👈 Importar toast
 
 const CoctelCard = ({ cocktail }) => {
   const navigate = useNavigate();
-  const {addToCart} = useCart()
+  const { addToCart } = useCart();
 
   const handleClick = () => {
     navigate(`/cocktail/${cocktail.idDrink}`, {
       state: { price: cocktail.price },
     });
+  };
+
+  const handleAddToCart = () => {
+    addToCart({
+      idDrink: cocktail.idDrink,
+      strDrink: cocktail.strDrink,
+      strDrinkThumb: cocktail.strDrinkThumb,
+      price: cocktail.price,
+      quantity: 1,
+    });
+
+    toast.success(`✅ ¡${cocktail.strDrink} ha sido agregado al carrito!`);
   };
 
   return (
@@ -32,9 +45,7 @@ const CoctelCard = ({ cocktail }) => {
             </span>
             <button
               className="product-card__btn"
-              onClick={() => {
-                addToCart(cocktail);
-              }}
+              onClick={handleAddToCart}
             >
               Add to Cart
             </button>
