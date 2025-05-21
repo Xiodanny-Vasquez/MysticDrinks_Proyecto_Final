@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react"; 
 import { fetchLimitedCocktails } from "../../services/cocktailAPI";
 import CoctelCard from "../../components/CoctelCard";
