@@ -1,0 +1,19 @@
+[33m92a837f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrama_alejo_alerta[m[33m, [m[1;31morigin/rama_alejo_alerta[m[33m)[m Guardar cambios del carrito y diseño corregido
+[33ma606135[m[33m ([m[1;32mmain[m[33m)[m Merge pull request #4 from Xiodanny-Vasquez/rama_Andrea
+[33mde95447[m[33m ([m[1;31morigin/rama_Andrea[m[33m)[m Inlusión de campo  edad en registro.
+[33mb7d4c10[m problema de interfaz solucionado
+[33mba7194a[m creacion del backend para que funcione el proxy el cual mejora el despliegue de cocteles y evita errores en el cors y modificacion de los archivos Api y cocteles
+[33m9b6fcc7[m Merge pull request #3 from Xiodanny-Vasquez/rama_Andrea
+[33m591972c[m autenticación de google en login para ir directo al home
+[33m85240a3[m Merge pull request #2 from Xiodanny-Vasquez/rama_Andrea
+[33m85e80d2[m Creación de archivos para bd
+[33m8f77b3b[m Creación de carpeta Backend
+[33ma1dd76a[m cambios en el login y en el registro para autenticación con google
+[33mdba872a[m Merge pull request #1 from Xiodanny-Vasquez/rama_alejo
+[33mf3185fe[m  Mejoras al carrito: sumar/restar cantidad, botón vaciar, y corrección en lógica de contexto
+[33m9599272[m cambio de titulo en productos a cocteles, tambien cambio de heroproductos a bannerproductos
+[33ma5a413c[m cambio en el carrusel y en el hero en el link de productos, se cambia el nombre produtos por Productos
+[33mbc4495d[m mejora en el footer y tamaño de login y register
+[33m4d3f11b[m creacion del carrusel de la pagina principal que se vincula a la API
+[33m47ad8e5[m cambio en el titulo y algunos nombres
+[33me47d83f[m Subida inicial del nuevo proyecto base
