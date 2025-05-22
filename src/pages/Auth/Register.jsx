@@ -35,7 +35,7 @@ function Register() {
           token: tokenResponse.credential || tokenResponse.access_token,
         });
         localStorage.setItem('user', JSON.stringify(res.data.user));
-        navigate('/');
+        navigate('/account');
       } catch (error) {
         console.error('Error al registrar con Google:', error);
       }
@@ -103,7 +103,7 @@ function Register() {
         email,
         password,
       });
-      navigate('/');
+      navigate('/account'); // Redirigir a la página de inicio de sesión después del registro exitoso
     } catch (error) {
       if (error.response?.status === 409) {
         setErrors((prev) => ({ ...prev, email: 'Este correo ya está registrado.' }));
