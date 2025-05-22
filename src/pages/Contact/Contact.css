@@ -144,3 +144,56 @@
       font-size: 0.9rem; /* Further adjust contact info font size */
   }
 }
+
+/* Notificación estilizada acorde a la paleta actual */
+.notification {
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  animation: fadeInOut 4s forwards;
+  user-select: none;
+  box-shadow: 0 0 12px rgba(248, 79, 22, 0.8);
+  background-color: rgba(248, 79, 22, 0.15);
+  color: #f84f16;
+  border: 1.5px solid #f84f16;
+}
+
+/* Mensajes de error */
+.notification.error {
+  background-color: rgba(178, 34, 34, 0.15);
+  color: #b22222;
+  border-color: #b22222;
+}
+
+/* Animación para aparecer y desaparecer */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Responsividad para móviles */
+@media (max-width: 600px) {
+  .notification {
+    font-size: 0.9rem;
+    padding: 12px 15px;
+  }
+}

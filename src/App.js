@@ -34,6 +34,7 @@ function App() {
             <Route path="/account" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/quiz" element={<CocktailQuestionnaire />} />
+            <Route path="/cocktail/:idDrink" element={<CoctelesDetalles />} /> 
             <Route path="/cocktail/:idDrink" element={<CoctelesDetalles />} />
             <Route
               path="*"

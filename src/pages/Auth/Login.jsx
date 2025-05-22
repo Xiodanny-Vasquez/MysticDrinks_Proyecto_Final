@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Login.css";
 import imgLogo from "../../assets/logo-mystic.png";
 import googleIcon from "../../assets/google-icon.png";
@@ -7,32 +7,65 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 
 function Login() {
+  const [email, setEmail] = useState(""); // cambio nombre a email porque es mejor para login
+  const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  // Login con Google
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
-        // Obtener datos del usuario desde Google
-        const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
-          headers: {
-            Authorization: `Bearer ${tokenResponse.access_token}`,
-          },
+        // Obtener datos de usuario desde Google
+        const resGoogleUser = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+          headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
         });
+        const googleUser = resGoogleUser.data;
 
-        const userData = res.data;
-        console.log("Usuario autenticado:", userData);
+        // Enviar token al backend para validar y obtener token JWT y rol
+        const resBackend = await axios.post("/api/auth/google", { token: tokenResponse.access_token });
+        const { token, user } = resBackend.data;
 
-        // Guardar usuario en localStorage
-        localStorage.setItem("user", JSON.stringify(userData));
+        // Guardar token y datos usuario
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
 
-        // Redireccionar al inicio
-        window.location.href = "/";
+        // Redirigir según rol
+        if (user.role === "admin") {
+          window.location.href = "/admin";
+        } else {
+          window.location.href = "/";
+        }
       } catch (error) {
-        console.error("Error al obtener datos del usuario:", error);
+        console.error("Error al iniciar sesión con Google", error);
+        setErrorMsg("Error al iniciar sesión con Google");
       }
     },
     onError: () => {
-      console.error("Error al iniciar sesión con Google");
+      setErrorMsg("Error al iniciar sesión con Google");
     },
   });
+
+  // Login con email y password
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMsg("");
+
+    try {
+      const res = await axios.post("/api/auth/login", { email, password });
+      const { token, user } = res.data;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      if (user.role === "admin") {
+        window.location.href = "/admin";
+      } else {
+        window.location.href = "/";
+      }
+    } catch (error) {
+      setErrorMsg("Credenciales inválidas");
+    }
+  };
 
   return (
     <div className="login-container">
@@ -42,11 +75,26 @@ function Login() {
         </div>
         <div className="login-content">
           <h2>Entrada exclusiva</h2>
-          <form>
-            <label>Nombre</label>
-            <input type="text" placeholder="Nombre" />
+
+          {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
+
+          <form onSubmit={handleSubmit}>
+            <label>Correo electrónico</label>
+            <input
+              type="email"
+              placeholder="Correo electrónico"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
             <label>Contraseña</label>
-            <input type="password" placeholder="Contraseña" />
+            <input
+              type="password"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
             <button type="submit" className="login-btn">
               Ingresar
             </button>
