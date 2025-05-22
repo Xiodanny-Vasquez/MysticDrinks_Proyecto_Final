@@ -18,7 +18,8 @@
 
 .lista {
   display: flex;
-  flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
+  flex-wrap: wrap;
+  /* Permite que los elementos se ajusten en pantallas pequeñas */
 
   p {
     margin: 10px;
@@ -69,12 +70,14 @@
 @media (max-width: 768px) {
   .card-summary {
     margin-left: 0.8rem;
-    width: 100%; /* Ocupa el ancho completo en pantallas pequeñas */
+    width: 100%;
+    /* Ocupa el ancho completo en pantallas pequeñas */
     padding: 15px;
   }
 
   .name-product {
-    flex: 1 1 100%; /* Hace que el nombre del producto ocupe el 100% en pantallas pequeñas */
+    flex: 1 1 100%;
+    /* Hace que el nombre del producto ocupe el 100% en pantallas pequeñas */
   }
 
   .total-price {
@@ -97,4 +100,38 @@
     font-size: 1.2rem;
     margin: 1rem;
   }
+}
+
+.boton-pago {
+  width: 100%;
+  background-color: #ff7b00;
+  color: white;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.boton-pago:hover {
+  background-color: #e66700;
+}
+
+.confirm-button {
+  margin-top: 1rem;
+  width: 100%;
+  background-color: #ff7b00;
+  color: white;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.confirm-button:hover {
+  background-color: #e66700;
 }
