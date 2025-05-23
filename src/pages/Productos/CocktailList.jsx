@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import { fetchLimitedCocktails } from "../../services/cocktailAPI";
 import CoctelCard from "../../components/CoctelCard";
 import "./CocktailList.css";
 import CoctelSpinner from "../../components/CoctelSpinner";
 import { Search } from "lucide-react";
-
 
 function CocktailList() {
   const [cocktails, setCocktails] = useState([]);
@@ -35,27 +34,19 @@ function CocktailList() {
     if (!Array.isArray(cocktailsData)) {
       throw new Error("Received invalid data format from API");
     }
-    const cocktailsWithPrice = cocktailsData
-      .map(addRandomPrice)
-      .filter(Boolean);
-    
+
+    // Asignar precio aleatorio a cada cóctel (mínimo $30.000 COP)
+    const cocktailsWithPrice = cocktailsData.map((drink) => ({
+      ...drink,
+      price: `$${(Math.floor(Math.random() * 10000) + 30000).toLocaleString("es-CO")}`,
+    }));
+
     setCocktails(cocktailsWithPrice);
   };
 
-  const addRandomPrice = (cocktail) => {
-    if (!cocktail || !cocktail.idDrink) {
-      console.warn("Cocktail data missing required properties:", cocktail);
-      return null;
-    }
-    return {
-      ...cocktail,
-      price: `$${(Math.random() * (20 - 5) + 5).toFixed(2)}`,
-    };
-  };
-
   const handleError = (error) => {
-    console.error("Error fetching cocktails:", error);
-    setError(error.message || "Error al cargar los cócteles");
+    console.error(error);
+    setError("Ocurrió un error al cargar los cócteles.");
   };
 
   // filtros

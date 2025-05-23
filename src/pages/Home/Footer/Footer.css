@@ -26,12 +26,12 @@
 
 .footer-icons {
   display: flex;
-  gap: 15px;
+  gap: 20px;
 }
 
 .social-icon {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
 }
 
@@ -67,7 +67,7 @@
   }
 
   .social-icon {
-      width: 30px;
-      height: 30px;
+      width: 50px;
+      height: 50px;
   }
 }

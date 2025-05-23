@@ -126,6 +126,17 @@
   right: -80px;
 }
 
+/* Quitar subrayado de enlaces dentro del slide */
+.slide a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.slide a:hover {
+  text-decoration: none;
+}
+
+
 /* Adaptabilidad para móviles */
 @media (max-width: 768px) {
   .coverflow-carousel {

@@ -9,11 +9,28 @@ function Carousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const intervalRef = useRef(null);
 
+  // Generar precio aleatorio en COP (formateado)
+  const generateRandomPriceCOP = () => {
+    const randomNumber = Math.floor(Math.random() * (60000 - 20000 + 1)) + 20000;
+    return randomNumber.toLocaleString("es-CO", {
+      style: "currency",
+      currency: "COP",
+      minimumFractionDigits: 0,
+    });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetchLimitedCocktails(5);
-        setCocktails(data);
+
+        // Agregar precios aleatorios a cada cóctel
+        const cocktailsWithPrices = data.map((cocktail) => ({
+          ...cocktail,
+          price: generateRandomPriceCOP(),
+        }));
+
+        setCocktails(cocktailsWithPrices);
       } catch (error) {
         console.error("Error cargando cócteles:", error);
       }
@@ -67,13 +84,14 @@ function Carousel() {
       <div className="slides">
         {cocktails.map((cocktail, index) => (
           <div key={cocktail.idDrink} className={getSlideClass(index)}>
-            <Link to={`/cocktail/${cocktail.idDrink}`} state={{ price: "$15.00" }}>
+            <Link to={`/cocktail/${cocktail.idDrink}`} state={{ price: cocktail.price }}>
               <img
                 src={cocktail.strDrinkThumb}
                 alt={cocktail.strDrink}
                 className="carousel1-img"
               />
-              <p>{cocktail.strDrink}</p>
+              <p className="fw-bold text-white mb-0">{cocktail.strDrink}</p>
+              
             </Link>
           </div>
         ))}
