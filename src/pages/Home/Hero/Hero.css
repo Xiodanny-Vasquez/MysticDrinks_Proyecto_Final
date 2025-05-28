@@ -1,7 +1,7 @@
 .hero-section {
-  background: #2E2828;
-  height: 115vh;
-  width: 100vw;
+  background: #1e1d1d;
+  height: 120vh;
+  width: 120vw;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -18,7 +18,7 @@
   font-size: 6rem;
   margin-top: 0.1rem;
   margin-bottom: 0.5rem;
-  color: white;
+  color: rgb(236, 81, 30);
 }
 
 .hero-section p {
@@ -56,4 +56,27 @@
   .hero-section p {
     font-size: 1rem;
   }
+  /* anime, cambio de color de letra */
+}
+@keyframes colorChange {
+  50% {
+    color: #ffffff;
+  }
+  50% {
+    color: #fd7600; 
+  }
+  50% {
+    color: #fd2600;
+  }
+  50% {
+    color: #fd7600;
+  }
+  50% {
+    color: #ffffff;
+  }
+  
+}
+
+.title-animated {
+  animation: colorChange 3s infinite ease-in-out;
 }
