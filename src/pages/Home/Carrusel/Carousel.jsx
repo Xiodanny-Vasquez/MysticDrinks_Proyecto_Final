@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from "react";
 import { fetchLimitedCocktails } from "../../../services/cocktailAPI";
 import { Link } from "react-router-dom";
@@ -9,7 +8,7 @@ function Carousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const intervalRef = useRef(null);
 
-  // Generar precio aleatorio en COP (formateado)
+  // Generar precio aleatorio en peso
   const generateRandomPriceCOP = () => {
     const randomNumber = Math.floor(Math.random() * (60000 - 20000 + 1)) + 20000;
     return randomNumber.toLocaleString("es-CO", {
