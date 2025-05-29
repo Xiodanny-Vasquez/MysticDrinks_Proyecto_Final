@@ -23,7 +23,7 @@ function HeroSection() {
         <p className="lead fs-4">Donde cada trago cuenta una historia.</p>
         <Carousel />
         <Link to="/Productos">
-          <Button className="btn" variant="secondary" size="lg">
+          <Button className="btn btn-secondary" size="lg">
             Explora nuestros cocteles exclusivos
           </Button>
         </Link>

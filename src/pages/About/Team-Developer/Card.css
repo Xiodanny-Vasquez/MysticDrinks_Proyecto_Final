@@ -4,9 +4,9 @@
     height: 80px;
     display:flex;
     justify-content: center;
+    color: rgb(238, 231, 225);
     align-items: center !important;
     margin-bottom: 2rem;
-    color:#D7C2B8;
     font-family: var(--cursive-font);
     border-radius: 30px;
     padding: 10px;
@@ -14,5 +14,7 @@
     h2{
         margin: 10px;
         font-size: 3rem;
+        color: rgb(254, 176, 112);
+        
     }
 }

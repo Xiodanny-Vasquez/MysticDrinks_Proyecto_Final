@@ -82,7 +82,7 @@ const SearchHeader = ({ searchQuery, onSearchChange, onIngredientChange, onAlcoh
   <div className="search-header text-center py-5">
     <div className="container">
       <h1 className="mb-2 cursive-font">¿Tienes un Cóctel favorito?</h1>
-      <p className="text-white mb-4 fs-5">Estamos seguros de que aquí lo encontrarás</p>
+      <p className="text-white mb-4 fs-5">Descúbrelo en nuestra selección exclusiva.</p>
       <SearchInput searchQuery={searchQuery} onSearchChange={onSearchChange} />
     </div>
   </div>
