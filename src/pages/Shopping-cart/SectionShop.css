@@ -46,7 +46,7 @@
 .boton-pago {
   margin-top: 20px;
   width: 100%;
-  background-color: #ff7b00;
+  background-color: #f7a65b;
   color: white;
   padding: 12px;
   font-size: 1rem;
@@ -57,5 +57,5 @@
 }
 
 .boton-pago:hover {
-  background-color: #e66700;
+  background-color: #e66800e7;
 }

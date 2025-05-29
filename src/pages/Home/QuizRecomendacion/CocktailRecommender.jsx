@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import "./CocktailQuestionnaire.css";
 import CoctelCard from "../../../components/CoctelCard";
@@ -6,7 +7,7 @@ const questions = [
   {
     id: 1,
     question: "¿Cuál es tu licor preferido?",
-    options: ["Vodka", "Ginebra", "Ron", "Tequila", "Whisky", "Sin alcohol"],
+    options: ["Vodka", "Ginebra", "Ron", "Tequila", "Whisky"],
   },
   {
     id: 2,
@@ -269,7 +270,7 @@ const CocktailQuestionnaire = () => {
             <div className="text-center mt-4">
               <button
                 onClick={resetQuestionnaire}
-                className="btn btn-success d-flex align-items-center justify-content-center"
+                className="btn btn-primary d-flex align-items-center justify-content-center"
               >
                 <i className="bi bi-arrow-repeat me-2"></i>
                 Volver a empezar

@@ -79,8 +79,12 @@ function App() {
           <FooterSection />
           <ToastContainer position="top-right" autoClose={2000} />
         </div>
-      </CartProvider>
-    </AuthProvider>
+        <FooterSection />
+
+        {/* ✅ Contenedor de alertas visuales */}
+        <ToastContainer position="top-right" autoClose={2000} />
+      </div>
+    </CartProvider>
   );
 }
 

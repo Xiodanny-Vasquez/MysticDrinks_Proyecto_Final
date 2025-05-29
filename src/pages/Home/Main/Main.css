@@ -1,5 +1,5 @@
 .main-background {
-  background-color: #2E2828;
+  background-color: #000000;
   color: #FFFFFF;
   padding: 2rem; /* Agrega un poco de padding para mejor apariencia en dispositivos pequeños */
 }
@@ -12,22 +12,22 @@
 }
 
 .title {
-  color: #FFFFFF;
+  color: #fe843d;
   font-size: 2rem;
   font-weight: bold;
+  font-family: var(--primary-font);
   margin-bottom: 1rem;
 }
 
 .paragraph {
-  color: #BF9D5F;
+  color: #ffffff;
   font-size: 1.2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 2rem; 
+  font-family: var(--secondary-font);
   text-align: center; /* Centra el texto para mejor apariencia en dispositivos móviles */
 }
 
 .btn-custom {
-  background-color: #902602;
-  color: #FFFFFF;
   padding: 0.5rem 2rem;
   font-size: 1rem;
   border: none;
@@ -35,7 +35,8 @@
 }
 
 .btn-custom:hover {
-  background-color: #7a2100;
+  background-color: #f17d42;
+  transform: scale(1.05);
   color: #D3D3D3;
 }
 
@@ -46,6 +47,7 @@
   border-radius: 10px;
   max-width: 500px; /* Limita el tamaño de la imagen en pantallas grandes */
   margin-top: 2rem; /* Agrega espacio en pantallas pequeñas */
+  box-shadow: 0 0 20px rgba(168, 67, 9, 0.697);
 }
 
 /* Estilos responsivos */

@@ -10,7 +10,7 @@ function Body() {
         <div>
           <p>
             Bienvenidos a un rincón donde cada cóctel es una obra maestra. En{" "}
-            <strong> MYSTIC </strong>, nuestra misión es elevar cada momento con
+            <strong> MYSTIC DRINKS</strong>, nuestra misión es elevar cada momento con
             una mezcla perfecta de sabores, aromas y detalles que transforman
             una bebida en una experiencia inolvidable.
           </p>
@@ -33,6 +33,8 @@ function Body() {
           "Un buen coctel no solo debe disfrutarse, <br /> sino tambien
           compartirse."
         </h3>
+        
+        <hr className="divider" />
       </Container>
       <div className="division"></div>
     </div>
