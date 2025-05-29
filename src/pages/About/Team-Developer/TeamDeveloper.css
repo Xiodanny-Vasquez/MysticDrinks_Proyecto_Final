@@ -8,13 +8,13 @@
   padding-bottom: 2rem;
 
   h1 {
-    padding: 3rem 0 2rem;
+    padding: 1rem;
     color: var(--accent-color);
     font-family: var(--primary-font);
   }
 
   p{
-    padding: 3rem 0 2rem;;
+    padding: 1rem;;
     color: var(--secondary-color);
     font-family: var(--secondary-font);
     font-size: 1.5rem;
@@ -25,6 +25,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
 }
 
 /* Responsivo para pantallas medianas */

@@ -13,9 +13,10 @@
 }
 
 .cursive-font {
-  font-family: var(--secondary-font);
-  font-weight: 600;
-  color: #BF9D5F;
+  font-family: var(--cursive-font);
+  font-weight: 500;
+  font-size: 4.5rem;
+  color: #fd7600;
 }
 
 /* Dark input styling */

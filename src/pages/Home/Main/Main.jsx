@@ -16,7 +16,10 @@ function Main() {
           <h1 className="title">El Arte de la Mixología</h1>
           <p className="paragraph">
             Inspirados en la tradición, creamos cócteles que elevan cada
-            momento. Innovación y pasión en cada copa.
+            momento.
+          </p>
+          <p className="paragraph">
+            Innovación y pasión en cada copa.
           </p>
           <Link to="/quiz">
             <button className="btn btn-custom">
