@@ -99,4 +99,24 @@ input {
   .register-btn {
     font-size: 1rem; /* Aumenta legibilidad de inputs y botón */
   }
+
+  input:disabled {
+  background-color: #3d3d3d;
+  color: #a0a0a0;
+  cursor: not-allowed;
+  border: 1px solid #555;
+}
+
+.google-icon {
+  width: 40px;
+  transition: opacity 0.3s;
+}
+
+.error-msg {
+  color: #ff7b7b;
+  font-size: 0.875rem;
+  margin-top: -0.3rem;
+  margin-bottom: 0.5rem;
+}
+
 }
