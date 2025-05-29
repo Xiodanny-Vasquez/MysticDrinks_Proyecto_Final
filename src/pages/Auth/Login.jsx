@@ -1,40 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { Link } from "react-router-dom";
+
 import "./Login.css";
 import imgLogo from "../../assets/logo-mystic.png";
 import googleIcon from "../../assets/google-icon.png";
-import { Link } from "react-router-dom";
-import { useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
 
 function Login() {
-  const [email, setEmail] = useState(""); // cambio nombre a email porque es mejor para login
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
-  // Login con Google
+  const { login } = useContext(AuthContext);
+
+  // Función para iniciar sesión con Google
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
-        // Obtener datos de usuario desde Google
-        const resGoogleUser = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
-          headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
-        });
+        // Obtener info usuario desde Google
+        const resGoogleUser = await axios.get(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          { headers: { Authorization: `Bearer ${tokenResponse.access_token}` } }
+        );
         const googleUser = resGoogleUser.data;
 
-        // Enviar token al backend para validar y obtener token JWT y rol
-        const resBackend = await axios.post("/api/auth/google", { token: tokenResponse.access_token });
+        // Enviar token al backend para login / registro
+        const resBackend = await axios.post("/api/auth/google", {
+          token: tokenResponse.access_token,
+        });
+
         const { token, user } = resBackend.data;
+        login(user, token); // Actualizar contexto con user y token
 
-        // Guardar token y datos usuario
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
-
-        // Redirigir según rol
-        if (user.role === "admin") {
-          window.location.href = "/admin";
-        } else {
-          window.location.href = "/";
-        }
+        // Redireccionar según rol
+        window.location.href = user.role === "admin" ? "/admin" : "/";
       } catch (error) {
         console.error("Error al iniciar sesión con Google", error);
         setErrorMsg("Error al iniciar sesión con Google");
@@ -45,7 +46,7 @@ function Login() {
     },
   });
 
-  // Login con email y password
+  // Login tradicional con email y contraseña
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg("");
@@ -54,14 +55,9 @@ function Login() {
       const res = await axios.post("/api/auth/login", { email, password });
       const { token, user } = res.data;
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+      login(user, token); // Actualizar contexto
 
-      if (user.role === "admin") {
-        window.location.href = "/admin";
-      } else {
-        window.location.href = "/";
-      }
+      window.location.href = user.role === "admin" ? "/admin" : "/";
     } catch (error) {
       setErrorMsg("Credenciales inválidas");
     }
@@ -76,8 +72,10 @@ function Login() {
         <div className="login-content">
           <h2>Entrada exclusiva</h2>
 
+          {/* Mostrar mensaje de error */}
           {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
 
+          {/* Formulario tradicional */}
           <form onSubmit={handleSubmit}>
             <label>Correo electrónico</label>
             <input
@@ -87,6 +85,7 @@ function Login() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
+
             <label>Contraseña</label>
             <input
               type="password"
@@ -95,13 +94,14 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+
             <button type="submit" className="login-btn">
               Ingresar
             </button>
           </form>
 
+          {/* Login con Google */}
           <div className="google-login">
-            <p style={{ marginTop: "20px" }}></p>
             <img
               src={googleIcon}
               alt="Iniciar sesión con Google"
@@ -111,6 +111,8 @@ function Login() {
           </div>
 
           <br />
+
+          {/* Link para ir al registro */}
           <Link to="/register" className="toggle-link">
             Nuevo Usuario
           </Link>
