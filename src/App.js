@@ -77,14 +77,12 @@ function App() {
             </Routes>
           </div>
           <FooterSection />
+
+          {/* ✅ Solo uno */}
           <ToastContainer position="top-right" autoClose={2000} />
         </div>
-        <FooterSection />
-
-        {/* ✅ Contenedor de alertas visuales */}
-        <ToastContainer position="top-right" autoClose={2000} />
-      </div>
-    </CartProvider>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 
