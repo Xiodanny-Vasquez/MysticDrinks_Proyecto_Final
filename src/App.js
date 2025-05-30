@@ -1,11 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import { CartProvider } from "./pages/Shopping-cart/Context/cardContext";
-
-import AdminRoute from "./pages/Admin/AdminRoute";
-import PrivateRoute from "./utils/PrivateRoute";
-
 import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
@@ -17,12 +12,12 @@ import Register from "./pages/Auth/Register";
 import NavBar from "./pages/Home/Navbar/NavBar";
 import FooterSection from "./pages/Home/Footer/FooterSection";
 import CocktailQuestionnaire from "./pages/Home/QuizRecomendacion/CocktailRecommender";
-import DatosEntrega from "./pages/Shopping-cart/DatosEntrega";
-import AdminPanel from "./pages/Admin/AdminPanel";
+import DatosEntrega from "./pages/Shopping-cart/DatosEntrega"; // ✅ Ruta válida y funcional
 
+import { CartProvider } from "./pages/Shopping-cart/Context/cardContext";
+import "./customTheme.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./customTheme.css";
 
 function App() {
   return (
@@ -36,33 +31,12 @@ function App() {
               <Route path="/sobre-nosotros" element={<About />} />
               <Route path="/productos" element={<Products />} />
               <Route path="/contacto" element={<Contact />} />
-              <Route path="/quiz" element={<CocktailQuestionnaire />} />
-              <Route path="/cocktail/:idDrink" element={<CoctelesDetalles />} />
+              <Route path="/cart" element={<SectionShop />} />
               <Route path="/datos-entrega" element={<DatosEntrega />} />
-
-              {/* Rutas protegidas */}
-              <Route
-                path="/cart"
-                element={
-                  <PrivateRoute>
-                    <SectionShop />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/admin"
-                element={
-                  <AdminRoute>
-                    <AdminPanel />
-                  </AdminRoute>
-                }
-              />
-
-              {/* Autenticación */}
               <Route path="/account" element={<Login />} />
               <Route path="/register" element={<Register />} />
-
-              {/* Página no encontrada */}
+              <Route path="/quiz" element={<CocktailQuestionnaire />} />
+              <Route path="/cocktail/:idDrink" element={<CoctelesDetalles />} />
               <Route
                 path="*"
                 element={
@@ -77,8 +51,6 @@ function App() {
             </Routes>
           </div>
           <FooterSection />
-
-          {/* ✅ Solo uno */}
           <ToastContainer position="top-right" autoClose={2000} />
         </div>
       </CartProvider>

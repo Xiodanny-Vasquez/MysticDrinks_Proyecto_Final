@@ -133,7 +133,7 @@ function ContactInfo() {
   return (
     <div className="contact-info">
       <h2>Información de contacto</h2>
-      <p><strong>Teléfono:</strong> <br />319 238 2148</p>
+      <p><strong>Teléfono:</strong> <br />310 5869874</p>
       <p><strong>Correo electrónico:</strong> <br /> MysticDrinksCo@gmail.com</p>
       <p><strong>Horario de atención:</strong> <br />Lunes - Domingo,<br /> 7 am - 11 pm</p>
       <p><strong>Ubicación:</strong> <br /> Carrera 20 # 19-50</p>

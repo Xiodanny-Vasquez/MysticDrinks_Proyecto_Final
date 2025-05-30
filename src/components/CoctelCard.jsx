@@ -16,7 +16,7 @@ const CoctelCard = ({ cocktail }) => {
 
   const handleAddToCart = () => {
     addToCart(cocktail);
-    toast.success(`¡${cocktail.strDrink} ha sido agregado al carrito!`);
+    toast.success(`✅ ¡${cocktail.strDrink} ha sido agregado al carrito!`);
   };
 
   return (
