@@ -34,11 +34,11 @@ const NavBar = () => {
             <Nav.Link as={NavLink} to="/" className={navLinkClass}>
               Inicio
             </Nav.Link>
-              <Nav.Link as={NavLink} to="/contacto" className={navLinkClass}>
-              Contacto
-            </Nav.Link>
             <Nav.Link as={NavLink} to="/productos" className={navLinkClass}>
               Productos
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/contacto" className={navLinkClass}>
+              Contacto
             </Nav.Link>
             <Nav.Link as={NavLink} to="/sobre-nosotros" className={navLinkClass}>
               Sobre Nosotros
