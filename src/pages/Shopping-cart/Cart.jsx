@@ -41,7 +41,7 @@ function Cart() {
 
       {cart.length > 0 && (
         <div style={{ textAlign: "center", marginTop: "1rem" }}>
-          <button className="btn btn-secondary" onClick={clearCart}>
+          <button className="btn btn-danger" onClick={clearCart}>
             Vaciar carrito
           </button>
         </div>
