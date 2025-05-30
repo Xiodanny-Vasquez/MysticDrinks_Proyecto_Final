@@ -124,6 +124,8 @@ app.post("/api/auth/register", async (req, res) => {
   }
 
   try {
+    // Guardar el usuario en tu base de datos aquí si tienes una
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -132,41 +134,23 @@ app.post("/api/auth/register", async (req, res) => {
       },
     });
 
-    await Promise.all([
-      // Correo al usuario
-      transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: "🎉 Registro exitoso - Bienvenido",
-        html: `
-          <h2>¡Hola, ${name}!</h2>
-          <p>Gracias por registrarte en nuestra <strong>Barra Exclusiva</strong>. 🍸</p>
-          <p>Esperamos que disfrutes de la mejor selección de cócteles y experiencias únicas.</p>
-          <p><strong>¡Salud!</strong><br>El equipo de la barra.</p>
-        `,
-      }),
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "🎉 Registro exitoso - Bienvenido",
+      html: `
+        <h2>¡Hola, ${name}!</h2>
+        <p>Gracias por registrarte en nuestra <strong>Barra Exclusiva</strong>. 🍸</p>
+        <p>Esperamos que disfrutes de la mejor selección de cócteles y experiencias únicas.</p>
+        <p><strong>¡Salud!</strong><br>El equipo de la barra.</p>
+      `,
+    };
 
-      // Correo interno a MysticDrinksCo
-      transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: "MysticDrinksCo@gmail.com",
-        subject: "🆕 Nuevo registro manual en Mystic Drinks",
-        html: `
-          <h3>Nuevo usuario registrado:</h3>
-          <ul>
-            <li><strong>Nombre:</strong> ${name}</li>
-            <li><strong>Email:</strong> ${email}</li>
-            <li><strong>Edad:</strong> ${edad}</li>
-            <li><strong>Identificación:</strong> ${numero_de_identificacion}</li>
-          </ul>
-        `,
-      }),
-    ]);
-
-    res.status(200).json({ message: "Usuario registrado y correos enviados correctamente" });
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: "Usuario registrado y correo enviado correctamente" });
   } catch (error) {
     console.error("❌ Error en el registro:", error);
-    res.status(500).json({ message: "Error en el registro o al enviar correos" });
+    res.status(500).json({ message: "Error en el registro o al enviar correo" });
   }
 });
 
@@ -193,6 +177,9 @@ app.post("/api/auth/google", async (req, res) => {
     const userData = await response.json();
     const { name, email, sub: googleId } = userData;
 
+    // Guardar en base de datos si tienes una (opcional)
+    // const user = await db.findOrCreateUser({ name, email, googleId });
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -201,43 +188,27 @@ app.post("/api/auth/google", async (req, res) => {
       },
     });
 
-    await Promise.all([
-      // Correo al usuario
-      transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: "🎉 Registro con Google exitoso - Bienvenido",
-        html: `
-          <h2>¡Hola, ${name}!</h2>
-          <p>Gracias por registrarte con Google en nuestra <strong>Barra Exclusiva</strong>. 🍸</p>
-          <p>Disfruta de nuestra selección de cócteles y experiencias únicas.</p>
-          <p><strong>¡Salud!</strong><br>El equipo de la barra.</p>
-        `,
-      }),
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "🎉 Registro con Google exitoso - Bienvenido",
+      html: `
+        <h2>¡Hola, ${name}!</h2>
+        <p>Gracias por registrarte con Google en nuestra <strong>Barra Exclusiva</strong>. 🍸</p>
+        <p>Disfruta de nuestra selección de cócteles y experiencias únicas.</p>
+        <p><strong>¡Salud!</strong><br>El equipo de la barra.</p>
+      `,
+    };
 
-      // Correo interno a MysticDrinksCo
-      transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: "MysticDrinksCo@gmail.com",
-        subject: "🆕 Nuevo registro con Google en Mystic Drinks",
-        html: `
-          <h3>Usuario autenticado con Google:</h3>
-          <ul>
-            <li><strong>Nombre:</strong> ${name}</li>
-            <li><strong>Email:</strong> ${email}</li>
-            <li><strong>Google ID:</strong> ${googleId}</li>
-          </ul>
-        `,
-      }),
-    ]);
+    await transporter.sendMail(mailOptions);
 
     res.status(200).json({
-      message: "Usuario autenticado con Google y correos enviados",
+      message: "Usuario autenticado con Google y correo enviado",
       user: { name, email, googleId },
     });
   } catch (error) {
     console.error("❌ Error en autenticación con Google:", error);
-    res.status(500).json({ message: "Error al autenticar con Google o enviar correos" });
+    res.status(500).json({ message: "Error al autenticar con Google o enviar correo" });
   }
 });
 

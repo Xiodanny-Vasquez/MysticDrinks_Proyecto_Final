@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-
+import { AuthProvider } from "./context/AuthContext";
 import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
@@ -21,38 +21,40 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
-    <CartProvider>
-      <div className="App">
-        <NavBar />
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/sobre-nosotros" element={<About />} />
-            <Route path="/productos" element={<Products />} />
-            <Route path="/contacto" element={<Contact />} />
-            <Route path="/cart" element={<SectionShop />} />
-            <Route path="/datos-entrega" element={<DatosEntrega />} /> {/* ✅ Ruta agregada correctamente */}
-            <Route path="/account" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/quiz" element={<CocktailQuestionnaire />} />
-            <Route path="/cocktail/:idDrink" element={<CoctelesDetalles />} />
-            <Route
-              path="*"
-              element={
-                <div
-                  className="d-flex justify-content-center align-items-center"
-                  style={{ minHeight: "80vh" }}
-                >
-                  <h2>404 - Página no encontrada</h2>
-                </div>
-              }
-            />
-          </Routes>
+    <AuthProvider>
+      <CartProvider>
+        <div className="App">
+          <NavBar />
+          <div className="content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/sobre-nosotros" element={<About />} />
+              <Route path="/productos" element={<Products />} />
+              <Route path="/contacto" element={<Contact />} />
+              <Route path="/cart" element={<SectionShop />} />
+              <Route path="/datos-entrega" element={<DatosEntrega />} />
+              <Route path="/account" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/quiz" element={<CocktailQuestionnaire />} />
+              <Route path="/cocktail/:idDrink" element={<CoctelesDetalles />} />
+              <Route
+                path="*"
+                element={
+                  <div
+                    className="d-flex justify-content-center align-items-center"
+                    style={{ minHeight: "80vh" }}
+                  >
+                    <h2>404 - Página no encontrada</h2>
+                  </div>
+                }
+              />
+            </Routes>
+          </div>
+          <FooterSection />
+          <ToastContainer position="top-right" autoClose={2000} />
         </div>
-        <FooterSection />
-        <ToastContainer position="top-right" autoClose={2000} />
-      </div>
-    </CartProvider>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 
