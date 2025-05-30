@@ -3,8 +3,14 @@ import './Footer.css';
 import facebookIcon from '../../../assets/icons-facebook.png';
 import instagramIcon from '../../../assets/icons-instagram.png';
 import logoMystic from "../../../assets/logo-mystic.png";
+import flechaArriba from '../../../assets/flecha.png'; // Ajusta la ruta según tu estructura
+
 
 function FooterSection() {
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <footer className="footer-section">
       <div className="footer-content">
@@ -24,6 +30,12 @@ function FooterSection() {
           </a>
         </div>
       </div>
+
+      {/* Flecha para subir al principio de la página */}
+      <button className="scroll-to-top" onClick={handleScrollToTop} aria-label="Volver arriba">
+        <img src={flechaArriba} alt="Subir al inicio" className="flecha-img" />
+      </button>
+
     </footer>
   );
 }
