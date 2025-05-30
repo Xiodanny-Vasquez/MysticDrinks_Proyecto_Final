@@ -8,6 +8,7 @@ function TeamDeveloper() {
     <div className="bodyTeam">
       <Container className="section-team">
         <h1>TEAM DEVELOPER</h1>
+        
         <div className="section-cards">
           <Cards name="Xiodanny" />
           <Cards name="Alejandro" />

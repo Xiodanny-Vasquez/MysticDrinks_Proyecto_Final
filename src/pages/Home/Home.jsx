@@ -6,13 +6,14 @@ import IconsSection  from './IconsSection/IconsSection'
 
 function Home() {
   return (
-    <div>
-        <HeroSection/>
-        <IconsSection/>
-        <Main/>
-        <UltimaSection/>
+    <div className="w-full max-w-[1440px] mx-auto px-4">
+      <HeroSection />
+      <IconsSection />
+      <Main />
+      <UltimaSection />
     </div>
   );
 }
+
 
 export default Home;

@@ -1,146 +1,228 @@
+/* ==========================
+   Página de Contacto - General
+   ========================== */
 .contact-page {
-    font-family: var(--secondary-font);
-    color: #f2f2f2;
-    background-color: #1e1e1e;
-    padding: 2rem;
-    text-align: center;
-  }
-  
-  .contact-page h1 {
-    font-family: var(--primary-font);
-    font-size: 2.8rem;
-    color: #fe7200;
-    margin: 2rem 0rem 3rem ;
+  font-family: var(--secondary-font);
+  color: #f2f2f2;
+  background-color: #1e1e1e;
+  padding: 2rem;
+  text-align: center;
+}
 
-  }
+.contact-page h1 {
+  font-family: var(--primary-font);
+  font-size: 2.8rem;
+  color: #fd7600;
+  margin: 2rem 0 3rem;
+}
 
-  .contact-page p {
-    font-family: var(--secondary-font);
-    font-size: 1.3rem;
-    margin-bottom: 2rem;
-    line-height: 1.5;
-  }
- 
+.contact-page p {
+  font-family: var(--secondary-font);
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
 
-  .contact-content {
-    display: flex;
-    gap: 3rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  
-  .contact-form {
-    background-color: transparent;
-    padding: 2rem 1.5rem 2rem;
-    max-width: 100%; /* Allows containers to adapt */
-    width: 500px; /* Optional: can be removed */
-  }
+/* ==========================
+   Contenido de Contacto
+   ========================== */
+.contact-content {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-  .contact-info {
-    background-color: rgba(0, 0, 0, 0.26);
-    padding: 2rem 1.5rem 2rem;
-    border-radius: 10px;
-    max-width: 100%; /* Allows containers to adapt */
-    width: 400px; /* Optional: can be removed */
-  }
-  
-  .contact-form h2 {
-    text-align: center;
-    font-family: var(--primary-font);
-    font-size: 1.6rem;
-    color: rgba(231, 116, 48, 0.88);
-  }
-  
-  .contact-info h2{
-    text-align: center;
-    font-family: var(--primary-font);
-    font-size: 1.5rem;
-    color: #ff6842;
+.contact-form {
+  background-color: transparent;
+  padding: 2rem 1.5rem;
+  max-width: 100%;
+  width: 500px;
+}
 
-  }
-  
-  .contact-form input, .contact-form textarea {
-    width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    border: 2px solid rgba(249, 135, 4, 0.71);
-    background-color: transparent;
-    border-radius: 5px;
-  }
-  
-  .contact-form button {
-    width: 45%;
-    padding: 0.8rem;
-    background-color: #f84f16;
-    color: white;
-    font-family: var(--botones-font);
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-  }
-  
-  .contact-info p {
-    font-family: var(--secondary-font);
-    margin: 0.5rem 0;
-    text-align: left;
-    font-size: 1.1rem;
-    margin: 1rem 2rem;
-  }
-  
-  .contact-info p strong {
-    color: #ff6842;
-    
-  }
+.contact-info {
+  background-color: rgba(0, 0, 0, 0.26);
+  padding: 2rem 1.5rem;
+  border-radius: 10px;
+  max-width: 100%;
+  width: 400px;
+}
 
-  /* Media Queries for Responsiveness */
+/* ==========================
+   Títulos
+   ========================== */
+.contact-form h2,
+.contact-info h2 {
+  text-align: center;
+  font-family: var(--primary-font);
+  font-size: 1.6rem;
+  color: #fd7600;
+}
+
+.contact-info h2 {
+  font-size: 1.5rem;
+  color: #ff6842;
+}
+
+/* ==========================
+   Inputs y Área de Mensaje
+   ========================== */
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 2px solid rgba(249, 135, 4, 0.71);
+  background-color: transparent;
+  border-radius: 5px;
+  color: white; /* Texto blanco */
+}
+
+/* Placeholders visibles */
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #cccccc;
+}
+
+/* ==========================
+   Botón de Envío
+   ========================== */
+.contact-form button {
+  width: 45%;
+  padding: 0.8rem;
+  background-color: #f84f16;
+  color: white;
+  font-family: var(--botones-font);
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.contact-form button:hover {
+  background: #ff9a5a;
+  transform: scale(1.09);
+  box-shadow: 0 0 15px rgba(255, 132, 61, 0.4);
+}
+
+/* ==========================
+   Información de Contacto
+   ========================== */
+.contact-info p {
+  font-family: var(--secondary-font);
+  margin: 1rem 2rem;
+  text-align: left;
+  font-size: 1.1rem;
+}
+
+.contact-info p strong {
+  color: #ff6842;
+}
+
+/* ==========================
+   Notificaciones
+   ========================== */
+.notification {
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  animation: fadeInOut 4s forwards;
+  user-select: none;
+  box-shadow: 0 0 12px rgba(248, 79, 22, 0.8);
+  background-color: rgba(248, 79, 22, 0.15);
+  color: #f84f16;
+  border: 1.5px solid #f84f16;
+}
+
+.notification.error {
+  background-color: rgba(178, 34, 34, 0.15);
+  color: #b22222;
+  border-color: #b22222;
+}
+
+/* Animación */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* ==========================
+   Responsividad
+   ========================== */
 @media (max-width: 768px) {
   .contact-page h1 {
-      font-size: 2rem; /* Smaller heading */
-      margin: 1.5rem 0; /* Adjust margin */
+    font-size: 2rem;
+    margin: 1.5rem 0;
   }
 
   .contact-page p {
-      font-size: 1.1rem; /* Smaller paragraph text */
+    font-size: 1.1rem;
   }
 
   .contact-content {
-      flex-direction: column; /* Stack the form and info sections */
-      gap: 2rem;
+    flex-direction: column;
+    gap: 2rem;
   }
 
-  .contact-form, .contact-info {
-      width: 90%; /* Use almost full width */
+  .contact-form,
+  .contact-info {
+    width: 90%;
   }
 
   .contact-form button {
-      width: 100%; /* Make button full width on small screens */
+    width: 100%;
   }
 
   .contact-info p {
-      font-size: 1rem; /* Smaller font size for contact info */
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 480px) {
   .contact-page h1 {
-      font-size: 1.8rem; /* Further reduce heading size */
+    font-size: 1.8rem;
   }
 
   .contact-page p {
-      font-size: 1rem; /* Adjust paragraph font size */
+    font-size: 1rem;
   }
 
-  .contact-form, .contact-info {
-      width: 100%; /* Use full width on very small screens */
+  .contact-form,
+  .contact-info {
+    width: 100%;
   }
 
   .contact-form button {
-      padding: 1rem; /* Increase button padding for easier interaction */
+    padding: 1rem;
   }
 
   .contact-info p {
-      font-size: 0.9rem; /* Further adjust contact info font size */
+    font-size: 0.9rem;
+  }
+
+  .notification {
+    font-size: 0.9rem;
+    padding: 12px 15px;
   }
 }
