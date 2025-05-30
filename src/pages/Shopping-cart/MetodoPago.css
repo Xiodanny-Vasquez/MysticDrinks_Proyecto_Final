@@ -1,0 +1,32 @@
+.metodo-pago-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    text-align: center;
+    background-color: #fff8f5;
+}
+
+.opciones-pago {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.btn-pse,
+.btn-tarjeta {
+    background-color: #a31044;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-pse:hover,
+.btn-tarjeta:hover {
+    background-color: #7a0c32;
+}

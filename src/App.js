@@ -12,7 +12,8 @@ import Register from "./pages/Auth/Register";
 import NavBar from "./pages/Home/Navbar/NavBar";
 import FooterSection from "./pages/Home/Footer/FooterSection";
 import CocktailQuestionnaire from "./pages/Home/QuizRecomendacion/CocktailRecommender";
-import DatosEntrega from "./pages/Shopping-cart/DatosEntrega"; // ✅ Ruta válida y funcional
+import DatosEntrega from "./pages/Shopping-cart/DatosEntrega";
+import MetodoPago from "./pages/Shopping-cart/MetodoPago"; // ✅ Ruta agregada
 
 import { CartProvider } from "./pages/Shopping-cart/Context/cardContext";
 import "./customTheme.css";
@@ -33,6 +34,7 @@ function App() {
               <Route path="/contacto" element={<Contact />} />
               <Route path="/cart" element={<SectionShop />} />
               <Route path="/datos-entrega" element={<DatosEntrega />} />
+              <Route path="/pago" element={<MetodoPago />} /> {/* ✅ Nueva ruta */}
               <Route path="/account" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/quiz" element={<CocktailQuestionnaire />} />
