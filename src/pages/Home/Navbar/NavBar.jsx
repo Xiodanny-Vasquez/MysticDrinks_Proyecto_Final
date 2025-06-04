@@ -4,13 +4,16 @@ import { Navbar, Nav, Container, NavItem } from "react-bootstrap";
 import { ShoppingCart, User } from "lucide-react";
 import logoMystic from "../../../assets/logo-mystic.png";
 import "./NavBar.css";
-
+import { useAuth } from "../../../context/AuthProvider"; 
 const NavBar = () => {
   // Helper function to handle active class
   const navLinkClass = ({ isActive }) => {
     return isActive ? "nav-link active" : "nav-link";
   };
 
+  const { user } = useAuth();
+
+  
   return (
     <Navbar expand="lg" className="nav-bar">
       <Container>
@@ -43,8 +46,13 @@ const NavBar = () => {
             <Nav.Link as={NavLink} to="/sobre-nosotros" className={navLinkClass}>
               Sobre Nosotros
             </Nav.Link>
+            {user?.email === "mysticdrinksco@gmail.com" && (
+            <Nav.Link as={NavLink} to="/admin" className={navLinkClass}>
+            Admin
+            </Nav.Link>
+)}
           </Nav>
-
+          
           {/* Íconos a la derecha */}
           <Nav className="ms-auto">
             <NavItem>

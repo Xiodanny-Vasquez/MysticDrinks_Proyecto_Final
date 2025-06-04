@@ -145,4 +145,17 @@ input {
   .toggle-link {
       font-size: 1rem; 
   }
+
+  .forgot-password-link {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.forgot-password-link a {
+  color: #ffa500;
+  text-decoration: underline;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
 }
