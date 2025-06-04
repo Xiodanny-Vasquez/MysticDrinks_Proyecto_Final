@@ -1,0 +1,196 @@
+/* AdminPage.css */
+
+/* Contenedor principal: fondo oscuro y texto claro */
+.admin-panel {
+  padding: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #121212; /* Fondo oscuro uniforme */
+  color: #f5f5f5;           /* Texto claro */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sección de formulario (crear/editar) */
+.form-section {
+  margin-bottom: 2rem;
+}
+
+/* Grid del formulario: entradas alineadas */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* Inputs y select: fondo ligeramente más claro, texto claro */
+.form-grid input,
+.form-grid select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: #1f1f1f; /* Fondo de input oscuro */
+  border: 1px solid #333;   /* Borde gris oscuro */
+  border-radius: 0.25rem;
+  color: #f5f5f5;           /* Texto claro en inputs */
+}
+
+/* Placeholder semi-transparente */
+.form-grid input::placeholder {
+  color: rgba(245, 245, 245, 0.6);
+}
+
+/* Botones del formulario */
+.form-grid button {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  background-color: #2979ff; /* Azul moderado para botones principales */
+  color: #fff;
+}
+
+/* Hover del botón principal */
+.form-grid button:hover {
+  background-color: #5393ff;
+}
+
+/* Botón "Cancelar" en modo editar (acento rojo) */
+.form-grid .cancel-btn {
+  background-color: #d32f2f; /* Rojo oscuro */
+  color: #fff;
+}
+
+.form-grid .cancel-btn:hover {
+  background-color: #ef5350;
+}
+
+/* Contenedor de la tabla: scroll horizontal si hace falta */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  background-color: #1f1f1f; /* Mismo fondo oscuro que inputs */
+  padding-bottom: 0.5rem;    /* Espacio para ver la barra de scroll */
+  border: 1px solid #333;    /* Borde tenue oscuro */
+  border-radius: 0.25rem;
+}
+
+/* Tabla ocupa todo el ancho disponible */
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Cabeceras: fondo más oscuro, texto claro */
+.table-container th {
+  background-color: #212121;
+  color: #e0e0e0;
+  padding: 0.75rem;
+  border: 1px solid #333;
+  font-size: 0.9rem;
+  position: sticky;
+  top: 0;      /* Cabecera fija al hacer scroll vertical */
+  z-index: 2;
+}
+
+/* Celdas de datos: fondo oscuro, texto claro */
+.table-container td {
+  padding: 0.75rem;
+  border: 1px solid #333;
+  font-size: 0.9rem;
+  color: #ddd;
+  background-color: #181818;
+  white-space: nowrap; /* Evita que el texto se divida */
+}
+
+/* Anchos mínimos para que no se desborde la tabla */
+.table-container th:nth-child(1),
+.table-container td:nth-child(1) {
+  min-width: 200px; /* Email */
+}
+
+.table-container th:nth-child(2),
+.table-container td:nth-child(2) {
+  min-width: 150px; /* Nombre */
+}
+
+.table-container th:nth-child(3),
+.table-container td:nth-child(3) {
+  width: 60px; /* Edad */
+  text-align: center;
+}
+
+.table-container th:nth-child(4),
+.table-container td:nth-child(4) {
+  min-width: 120px; /* Identificación */
+}
+
+.table-container th:nth-child(7),
+.table-container td:nth-child(7) {
+  min-width: 100px; /* Fecha de creación */
+}
+
+.table-container th:nth-child(8),
+.table-container td:nth-child(8) {
+  min-width: 140px; /* Acciones (editar/eliminar) */
+}
+
+/* Celda de acciones: espacio entre botones */
+.actions-cell {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Botón "Editar" */
+.edit-btn {
+  background-color: #42a5f5;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.edit-btn:hover {
+  background-color: #64b5f6;
+}
+
+/* Botón "Eliminar" */
+.delete-btn {
+  background-color: #e53935;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #ef5350;
+}
+
+/* Select de rol dentro de la tabla: fondo oscuro y texto claro */
+.table-container select {
+  background-color: #1f1f1f;
+  border: 1px solid #555;
+  color: #f5f5f5;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+/* Scroll bar personalizado (opcional y compatible con WebKit) */
+.table-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background-color: #1f1f1f;
+}
