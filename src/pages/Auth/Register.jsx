@@ -3,112 +3,116 @@ import "./Register.css";
 import imgRegister from "../../assets/Register.jpg";
 import googleIcon from "../../assets/google-icon.png";
 import { useNavigate } from "react-router-dom";
-import { useGoogleLogin } from "@react-oauth/google";
+import { supabase } from "../../context/supabaseClient";
 import axios from "axios";
 
 function Register() {
   const navigate = useNavigate();
 
-  // Estados
-  const [edad, setEdad] = useState("");
-  const [numeroDeIdentificacion, setNumeroDeIdentificacion] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  // Errores
-  const [errors, setErrors] = useState({
+  const [formData, setFormData] = useState({
     edad: "",
     numeroDeIdentificacion: "",
     name: "",
     email: "",
     password: "",
-    general: "",
   });
 
-  // Validaciones
-  const isEdadValida = !isNaN(edad) && parseInt(edad) >= 18;
-  const isNumeroDeIdentificacionValido = numeroDeIdentificacion.trim().length >= 6;
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Login con Google
-  const loginWithGoogle = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      try {
-        const res = await axios.post("http://localhost:4000/api/auth/google", {
-          token: tokenResponse.credential || tokenResponse.access_token,
-        });
-        localStorage.setItem("user", JSON.stringify(res.data.user));
-        navigate("/account");
-      } catch (error) {
-        console.error("Error al registrar con Google:", error);
-      }
-    },
-    onError: () => console.log("Error al registrar con Google"),
-  });
+  const isEdadValida = !isNaN(formData.edad) && parseInt(formData.edad) >= 18;
+  const isNumeroDeIdentificacionValido =
+    formData.numeroDeIdentificacion.trim().length >= 6;
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" });
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    const { edad, numeroDeIdentificacion, name, email, password } = formData;
+
+    if (!edad.trim()) newErrors.edad = "La edad es obligatoria.";
+    else if (!isEdadValida)
+      newErrors.edad = "Debes tener al menos 18 años para registrarte.";
+
+    if (!numeroDeIdentificacion.trim()) {
+      newErrors.numeroDeIdentificacion = "El número de identificación es obligatorio.";
+    } else if (!isNumeroDeIdentificacionValido) {
+      newErrors.numeroDeIdentificacion =
+        "El número debe tener al menos 6 caracteres.";
+    }
+
+    if (!name.trim()) newErrors.name = "El nombre es obligatorio.";
+    if (!email.trim()) newErrors.email = "El correo es obligatorio.";
+    if (!password.trim()) newErrors.password = "La contraseña es obligatoria.";
+
+    return newErrors;
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  const validationErrors = validate();
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
 
-    const newErrors = {
-      edad: "",
-      numeroDeIdentificacion: "",
-      name: "",
-      email: "",
-      password: "",
-      general: "",
-    };
+  setIsSubmitting(true);
+  try {
+    // 🔍 Verificar si ya existe y fue registrado con Google
+    const providerCheck = await axios.get(
+      `/api/auth/provider?email=${encodeURIComponent(formData.email.trim().toLowerCase())}`
+    );
 
-    let hasError = false;
+    const { exists, isGoogleUser } = providerCheck.data;
 
-    if (!edad.trim()) {
-      newErrors.edad = "La edad es obligatoria.";
-      hasError = true;
-    } else if (!isEdadValida) {
-      newErrors.edad = "Debes ser mayor de 18 años para registrarte.";
-      hasError = true;
+    
+    if (exists && isGoogleUser) {
+    setErrors({ email: "Este correo ya está registrado con Google. Usa el botón de Google para iniciar sesión." });
+    setIsSubmitting(false);
+   return;
+}
+
+    // 🚀 Registro manual
+    await axios.post("/api/auth/register", {
+      name: formData.name.trim(),
+      edad: parseInt(formData.edad),
+      numero_de_identificacion: formData.numeroDeIdentificacion.trim(),
+      email: formData.email.trim().toLowerCase(),
+      password: formData.password,
+    });
+
+    navigate("/account");
+  } catch (error) {
+    if (error.response?.status === 409) {
+      setErrors({ email: "Este correo ya está registrado." });
+    } else {
+      setErrors({ general: "Error al registrar. Intenta de nuevo." });
     }
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
-    if (isEdadValida && !isNumeroDeIdentificacionValido) {
-      newErrors.numeroDeIdentificacion =
-        "El número de identificación debe tener al menos 6 caracteres.";
-      hasError = true;
-    }
 
-    if (isEdadValida && isNumeroDeIdentificacionValido) {
-      if (!name.trim()) {
-        newErrors.name = "El nombre es obligatorio.";
-        hasError = true;
-      }
-      if (!email.trim()) {
-        newErrors.email = "El correo es obligatorio.";
-        hasError = true;
-      }
-      if (!password.trim()) {
-        newErrors.password = "La contraseña es obligatoria.";
-        hasError = true;
-      }
-    }
-
-    if (hasError) {
-      setErrors(newErrors);
-      return;
-    }
-
+  const loginWithGoogle = async () => {
     try {
-      await axios.post("http://localhost:4000/api/auth/register", {
-        name,
-        edad: parseInt(edad),
-        numero_de_identificacion: numeroDeIdentificacion,
-        email,
-        password,
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: "http://localhost:3000/oauth-callback", // ⚠️ Ajusta esto según tu dominio de frontend
+        },
       });
-      navigate("/account");
-    } catch (error) {
-      if (error.response?.status === 409) {
-        setErrors((prev) => ({ ...prev, email: "Este correo ya está registrado." }));
-      } else {
-        setErrors((prev) => ({ ...prev, general: "Error al registrar. Intenta de nuevo." }));
-      }
+
+      if (error) throw error;
+    } catch (err) {
+      console.error("Error al iniciar sesión con Google:", err.message);
+      setErrors((prev) => ({
+        ...prev,
+        general: "Error al iniciar sesión con Google. Intenta nuevamente.",
+      }));
     }
   };
 
@@ -118,91 +122,83 @@ function Register() {
         <div className="register-form">
           <h2>Haz parte de nuestra Barra Exclusiva</h2>
           <form onSubmit={handleSubmit}>
-            {/* Edad */}
             <label>Edad</label>
             <input
               type="number"
+              name="edad"
               placeholder="Edad"
-              value={edad}
-              onChange={(e) => setEdad(e.target.value)}
+              value={formData.edad}
+              onChange={handleChange}
               required
             />
             {errors.edad && <p className="error-msg">{errors.edad}</p>}
 
-            {!isEdadValida && edad && (
-              <p className="error-msg">
-                Debes ser mayor de 18 años para continuar con el registro.
-              </p>
-            )}
-
-            {/* Número de identificación */}
             <label>Número de identificación</label>
             <input
               type="text"
+              name="numeroDeIdentificacion"
               placeholder="Número de identificación"
-              value={numeroDeIdentificacion}
-              onChange={(e) => setNumeroDeIdentificacion(e.target.value)}
+              value={formData.numeroDeIdentificacion}
+              onChange={handleChange}
               required
-              disabled={!isEdadValida}
             />
             {errors.numeroDeIdentificacion && (
               <p className="error-msg">{errors.numeroDeIdentificacion}</p>
             )}
 
-            {/* Nombre */}
             <label>Nombre</label>
             <input
               type="text"
+              name="name"
               placeholder="Nombre"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formData.name}
+              onChange={handleChange}
               required
-              disabled={!isEdadValida}
             />
             {errors.name && <p className="error-msg">{errors.name}</p>}
 
-            {/* Correo */}
             <label>Correo electrónico</label>
             <input
               type="email"
+              name="email"
               placeholder="Correo electrónico"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={handleChange}
               required
-              disabled={!isEdadValida}
             />
             {errors.email && <p className="error-msg">{errors.email}</p>}
 
-            {/* Contraseña */}
             <label>Contraseña</label>
             <input
               type="password"
+              name="password"
               placeholder="Contraseña"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
               required
-              disabled={!isEdadValida}
             />
             {errors.password && <p className="error-msg">{errors.password}</p>}
 
-            {/* Botón */}
-            <button type="submit" className="register-btn" disabled={!isEdadValida}>
-              Unirme
+            <button type="submit" className="register-btn" disabled={isSubmitting}>
+              {isSubmitting ? "Registrando..." : "Unirme"}
             </button>
 
             {errors.general && <p className="error-msg">{errors.general}</p>}
 
-            {/* Google login */}
             <div
-              style={{ marginTop: "1rem", cursor: "pointer", textAlign: "center" }}
-              onClick={() => loginWithGoogle()}
+              style={{
+                marginTop: "1rem",
+                cursor: "pointer",
+                textAlign: "center",
+              }}
+              onClick={loginWithGoogle}
             >
               <img src={googleIcon} alt="Google login" className="google-icon" />
+              <p>Registrarme con Google</p>
             </div>
           </form>
         </div>
 
-        {/* Imagen lateral */}
         <div className="register-image">
           <img src={imgRegister} alt="Coctel humeante" />
         </div>
