@@ -124,9 +124,19 @@ app.post("/api/auth/register", async (req, res) => {
     });
 
     if (authError || !authUser?.user?.id) {
-      console.error("❌ Error en Auth:", authError);
-      return res.status(500).json({ message: "Error en Auth: " + authError.message });
-    }
+  console.error("❌ Error en Auth:", authError);
+
+  // Manejar error específico si el usuario ya existe
+    if (
+    authError?.status === 422 &&
+    authError.message?.toLowerCase().includes("user already registered")
+   ) {
+    return res.status(409).json({ code: "user_already_exists" });
+   }
+
+   return res.status(500).json({ message: "Error en Auth: " + authError.message });
+}
+
 
     const userId = authUser.user.id;
 

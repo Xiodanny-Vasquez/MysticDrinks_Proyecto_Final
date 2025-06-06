@@ -5,6 +5,8 @@ import { ShoppingCart, User } from "lucide-react";
 import logoMystic from "../../../assets/logo-mystic.png";
 import "./NavBar.css";
 import { useAuth } from "../../../context/AuthProvider"; 
+import UserMenu from "../../../components/UserMenu";
+
 const NavBar = () => {
   // Helper function to handle active class
   const navLinkClass = ({ isActive }) => {
@@ -46,7 +48,7 @@ const NavBar = () => {
             <Nav.Link as={NavLink} to="/sobre-nosotros" className={navLinkClass}>
               Sobre Nosotros
             </Nav.Link>
-            {user?.email === "mysticdrinksco@gmail.com" && (
+            {user?.rol === "admin" && (
             <Nav.Link as={NavLink} to="/admin" className={navLinkClass}>
             Admin
             </Nav.Link>
@@ -61,9 +63,7 @@ const NavBar = () => {
               </Nav.Link>
             </NavItem>
             <NavItem>
-              <Nav.Link as={Link} to="/account">
-                <User color="white" size={25} />
-              </Nav.Link>
+            <UserMenu />
             </NavItem>
           </Nav>
         </Navbar.Collapse>
