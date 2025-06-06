@@ -52,57 +52,68 @@ function Register() {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const validationErrors = validate();
-  if (Object.keys(validationErrors).length > 0) {
-    setErrors(validationErrors);
-    return;
-  }
-
-  setIsSubmitting(true);
-  try {
-    // 🔍 Verificar si ya existe y fue registrado con Google
-    const providerCheck = await axios.get(
-      `/api/auth/provider?email=${encodeURIComponent(formData.email.trim().toLowerCase())}`
-    );
-
-    const { exists, isGoogleUser } = providerCheck.data;
-
-    
-    if (exists && isGoogleUser) {
-    setErrors({ email: "Este correo ya está registrado con Google. Usa el botón de Google para iniciar sesión." });
-    setIsSubmitting(false);
-   return;
-}
-
-    // 🚀 Registro manual
-    await axios.post("/api/auth/register", {
-      name: formData.name.trim(),
-      edad: parseInt(formData.edad),
-      numero_de_identificacion: formData.numeroDeIdentificacion.trim(),
-      email: formData.email.trim().toLowerCase(),
-      password: formData.password,
-    });
-
-    navigate("/account");
-  } catch (error) {
-    if (error.response?.status === 409) {
-      setErrors({ email: "Este correo ya está registrado." });
-    } else {
-      setErrors({ general: "Error al registrar. Intenta de nuevo." });
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
     }
-  } finally {
-    setIsSubmitting(false);
-  }
-};
 
+    setIsSubmitting(true);
+    try {
+      const normalizedEmail = formData.email.trim().toLowerCase();
+
+      // 🔍 Verificar si ya existe y fue registrado con Google
+      const providerCheck = await axios.get(
+        `/api/auth/provider?email=${encodeURIComponent(normalizedEmail)}`
+      );
+
+      const { exists, isGoogleUser } = providerCheck.data;
+
+      if (exists && isGoogleUser) {
+        setErrors({
+          email: "Este correo ya está registrado con Google. Usa el botón de Google para iniciar sesión.",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      // 🚀 Registro manual
+      await axios.post("/api/auth/register", {
+        name: formData.name.trim(),
+        edad: parseInt(formData.edad),
+        numero_de_identificacion: formData.numeroDeIdentificacion.trim(),
+        email: normalizedEmail,
+        password: formData.password,
+      });
+
+      navigate("/account");
+    } catch (error) {
+      const supaError = error.response?.data;
+
+      if (
+        supaError?.code === "user_already_exists" ||
+        error.response?.status === 409
+      ) {
+        setErrors({
+          email: "Este correo ya está registrado. Intenta iniciar sesión.",
+        });
+      } else {
+        setErrors({
+          general: "Error al registrar. Intenta de nuevo.",
+        });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const loginWithGoogle = async () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: "http://localhost:3000/oauth-callback", // ⚠️ Ajusta esto según tu dominio de frontend
+          redirectTo: "http://localhost:3000/oauth-callback", // ajusta si es producción
         },
       });
 
