@@ -23,7 +23,7 @@ import OAuthCallback from "./pages/Auth/OAuthCallback";
 import CompleteProfile from "./pages/Auth/CompleteProfile";
 import AdminPage from "./pages/Admin/AdminPage";
 import ResetPassword from "./pages/Auth/ResetPassword";
-
+import AccountPage from "./pages/Auth/AccountPage";
 
 function App() {
   return (
@@ -49,6 +49,7 @@ function App() {
                 <Route path="/complete-profile" element={<CompleteProfile />} />
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/accountPage" element={<AccountPage />} />
                 <Route
                   path="*"
                   element={
