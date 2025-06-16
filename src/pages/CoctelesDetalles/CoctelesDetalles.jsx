@@ -146,6 +146,10 @@ function CoctelesDetalles() {
       </div>
     </section>
   );
+
+
 }
+
+
 
 export default CoctelesDetalles;

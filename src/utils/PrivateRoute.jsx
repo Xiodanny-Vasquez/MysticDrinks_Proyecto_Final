@@ -1,9 +1,8 @@
-import { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthProvider"; // ✅ usamos el hook
 
 const PrivateRoute = ({ children }) => {
-  const { token } = useContext(AuthContext); // ✅ más limpio y reactivo
+  const { token } = useAuth(); // ✅ usamos el hook personalizado
 
   return token ? children : <Navigate to="/account" replace />;
 };

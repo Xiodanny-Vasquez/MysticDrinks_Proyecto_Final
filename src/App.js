@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthProvider"; // ✅ Solo esta
+import { AuthProvider } from "./context/AuthProvider";
 import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
@@ -14,6 +14,8 @@ import FooterSection from "./pages/Home/Footer/FooterSection";
 import CocktailQuestionnaire from "./pages/Home/QuizRecomendacion/CocktailRecommender";
 import DatosEntrega from "./pages/Shopping-cart/DatosEntrega";
 import MetodoPago from "./pages/Shopping-cart/MetodoPago";
+import Confirmacion from "./pages/Shopping-cart/confirmacion";
+
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { CartProvider } from "./pages/Shopping-cart/Context/cardContext";
 import "./customTheme.css";
@@ -24,6 +26,7 @@ import CompleteProfile from "./pages/Auth/CompleteProfile";
 import AdminPage from "./pages/Admin/AdminPage";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import AccountPage from "./pages/Auth/AccountPage";
+import PrivateRoute from "./utils/PrivateRoute"; // ✅ Importación agregada
 
 function App() {
   return (
@@ -39,8 +42,33 @@ function App() {
                 <Route path="/productos" element={<Products />} />
                 <Route path="/contacto" element={<Contact />} />
                 <Route path="/cart" element={<SectionShop />} />
-                <Route path="/datos-entrega" element={<DatosEntrega />} />
-                <Route path="/pago" element={<MetodoPago />} />
+
+                {/* ✅ Rutas protegidas */}
+                <Route
+                  path="/datos-entrega"
+                  element={
+                    <PrivateRoute>
+                      <DatosEntrega />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/pago"
+                  element={
+                    <PrivateRoute>
+                      <MetodoPago />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/confirmacion"
+                  element={
+                    <PrivateRoute>
+                      <Confirmacion />
+                    </PrivateRoute>
+                  }
+                />
+
                 <Route path="/account" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/quiz" element={<CocktailQuestionnaire />} />

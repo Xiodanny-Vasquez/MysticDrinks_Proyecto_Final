@@ -35,11 +35,14 @@ function CocktailList() {
       throw new Error("Received invalid data format from API");
     }
 
-    // Asignar precio aleatorio a cada cóctel (mínimo $30.000 COP)
-    const cocktailsWithPrice = cocktailsData.map((drink) => ({
-      ...drink,
-      price: `$${(Math.floor(Math.random() * 10000) + 30000).toLocaleString("es-CO")}`,
-    }));
+    // ✅ Asignar precio aleatorio entre $35.000 y $45.000 COP
+    const cocktailsWithPrice = cocktailsData.map((drink) => {
+      const precioAleatorio = Math.floor(Math.random() * 10000) + 35000;
+      return {
+        ...drink,
+        price: `$${precioAleatorio.toLocaleString("es-CO")} COP`,
+      };
+    });
 
     setCocktails(cocktailsWithPrice);
   };
@@ -49,14 +52,14 @@ function CocktailList() {
     setError("Ocurrió un error al cargar los cócteles.");
   };
 
-  // filtros
+  // 🔎 Filtros de búsqueda
   const filteredCocktails = cocktails.filter((cocktail) => {
     const matchesSearch = cocktail.strDrink
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
     const matchesIngredient = ingredientFilter
       ? [cocktail.strIngredient1, cocktail.strIngredient2, cocktail.strIngredient3]
-          .some((ing) => ing?.toLowerCase() === ingredientFilter.toLowerCase())
+        .some((ing) => ing?.toLowerCase() === ingredientFilter.toLowerCase())
       : true;
     const matchesAlcoholic = alcoholicFilter
       ? cocktail.strAlcoholic?.toLowerCase() === alcoholicFilter.toLowerCase()

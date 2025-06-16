@@ -32,10 +32,16 @@
 }
 
 .total-price {
-  font-family: var(--secondary-font);
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ffffff;
+  /* blanco puro */
   text-align: center;
-  font-size: 2rem;
-  margin: 2rem;
+  margin-top: 1rem;
+  text-shadow: 1px 1px 2px #ff7300;
+  /* efecto glow suave naranja */
+  border-top: 2px solid #ff7300;
+  padding-top: 1rem;
 }
 
 .divider {
@@ -134,4 +140,31 @@
 
 .confirm-button:hover {
   background-color: #e66700;
+}
+
+.summary-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: white;
+}
+
+.summary-name {
+  font-weight: 500;
+  max-width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.summary-price {
+  font-weight: bold;
+  min-width: 100px;
+  text-align: right;
 }

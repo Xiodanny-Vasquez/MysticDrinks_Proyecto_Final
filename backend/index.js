@@ -6,12 +6,15 @@ const nodemailer = require("nodemailer");
 const adminRoutes = require("./routes/users");
 // Necesario para fetch en Node.js
 const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
+const pedidoRoute = require("./routes/pedido");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 app.use("/api/admin", adminRoutes);
+app.use("/api/pedido", pedidoRoute);
+
 
 const PORT = process.env.PORT || 5000;
 
@@ -124,18 +127,18 @@ app.post("/api/auth/register", async (req, res) => {
     });
 
     if (authError || !authUser?.user?.id) {
-  console.error("❌ Error en Auth:", authError);
+      console.error("❌ Error en Auth:", authError);
 
-  // Manejar error específico si el usuario ya existe
-    if (
-    authError?.status === 422 &&
-    authError.message?.toLowerCase().includes("user already registered")
-   ) {
-    return res.status(409).json({ code: "user_already_exists" });
-   }
+      // Manejar error específico si el usuario ya existe
+      if (
+        authError?.status === 422 &&
+        authError.message?.toLowerCase().includes("user already registered")
+      ) {
+        return res.status(409).json({ code: "user_already_exists" });
+      }
 
-   return res.status(500).json({ message: "Error en Auth: " + authError.message });
-}
+      return res.status(500).json({ message: "Error en Auth: " + authError.message });
+    }
 
 
     const userId = authUser.user.id;
@@ -207,8 +210,8 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(500).json({ message: "Error al obtener perfil del usuario" });
     }
 
-    return res.status(200).json({ 
-      message: "Inicio de sesión exitoso", 
+    return res.status(200).json({
+      message: "Inicio de sesión exitoso",
       user: userProfile,
       session: authData.session, // Puedes devolver token aquí si lo necesitas
     });

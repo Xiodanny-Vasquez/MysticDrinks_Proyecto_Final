@@ -38,15 +38,23 @@ function CartSummary() {
   return (
     <div className="card-summary">
       <h2>Resumen</h2>
-      <ul>
+      <ul className="summary-list">
         {cart.map((cocktail) => (
-          <CartItem key={cocktail.id} cocktail={cocktail} />
+          <li key={cocktail.id} className="summary-item">
+            <span className="summary-name">{cocktail.title}</span>
+            <span className="summary-price">
+              ${calculateTotal(cocktail.price, cocktail.quantity).toFixed(3)} COP
+            </span>
+          </li>
         ))}
       </ul>
-      <hr className="divider" />
-      <h3 className="total-price">Total Final: ${grandTotal.toFixed(2)}</h3>
 
-      {/* ✅ Botón para ir a Datos de Entrega */}
+      <hr className="divider" />
+
+      <h3 className="total-price">
+        Total Final: ${grandTotal.toFixed(3)} <span>COP</span>
+      </h3>
+
       <button
         className="confirm-button"
         onClick={() => navigate("/datos-entrega")}
@@ -54,17 +62,6 @@ function CartSummary() {
         Confirmar compra
       </button>
     </div>
-  );
-}
-
-function CartItem({ cocktail }) {
-  const total = calculateTotal(cocktail.price, cocktail.quantity);
-
-  return (
-    <li className="lista">
-      <p className="name-product">{cocktail.title}</p>
-      <p className="Price-product">${total.toFixed(2)}</p>
-    </li>
   );
 }
 
