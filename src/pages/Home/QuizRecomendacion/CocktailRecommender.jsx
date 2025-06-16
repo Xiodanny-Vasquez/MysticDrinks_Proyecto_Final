@@ -182,7 +182,9 @@ const CocktailQuestionnaire = () => {
             ...cocktail,
             score,
             ingredients,
+            price: `$${(Math.random() * 10 + 10).toFixed(2)}`, // 👈 Añadir precio
           };
+
         })
         .sort((a, b) => b.score - a.score)
         .slice(0, 5);
@@ -243,7 +245,7 @@ const CocktailQuestionnaire = () => {
                 ))}
               </div>
             </div>
-  
+
             {loading ? (
               <div className="text-center py-4">
                 <div className="spinner-border text-danger" role="status">
@@ -266,7 +268,7 @@ const CocktailQuestionnaire = () => {
                 ))}
               </div>
             )}
-  
+
             <div className="text-center mt-4">
               <button
                 onClick={resetQuestionnaire}
