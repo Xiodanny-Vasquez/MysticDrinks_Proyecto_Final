@@ -182,7 +182,7 @@ const CocktailQuestionnaire = () => {
             ...cocktail,
             score,
             ingredients,
-            price: `$${(Math.random() * 10 + 10).toFixed(2)}`, // 👈 Añadir precio
+            price: `$${(Math.floor(Math.random() * 10000) + 30000).toLocaleString("es-CO")} COP`, // 👈 Aquí ya corregido
           };
 
         })

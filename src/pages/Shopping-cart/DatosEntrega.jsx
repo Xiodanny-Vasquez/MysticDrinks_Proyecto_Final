@@ -133,16 +133,19 @@ const DatosEntrega = () => {
                         <li key={item.id}>
                             <span>{item.title}</span>
                             <span>
-                                $
-                                {(
+                                ${(
                                     parseFloat(item.price.replace("$", "")) * item.quantity
-                                ).toFixed(2)}
+                                ).toLocaleString("es-CO")} COP
                             </span>
+
                         </li>
                     ))}
                 </ul>
                 <hr />
-                <p className="total">Total: ${total.toFixed(2)}</p>
+                <p className="total">
+                    Total: ${total.toLocaleString("es-CO")} COP
+                </p>
+
 
                 <button className="pay-button" onClick={handlePago}>
                     Realizar pago
