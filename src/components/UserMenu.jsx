@@ -37,13 +37,14 @@ const UserMenu = () => {
   return (
     <div className="user-menu" ref={menuRef}>
       <Nav.Link onClick={() => setOpen(!open)} className="icon-link">
-        <User size={25} color="white" />
+        <User size={25} color="orange" />
       </Nav.Link>
-
+      
       {open && (
         <ul className="dropdown">
           <li onClick={() => navigate("/accountPage")}>Perfil</li>
           <li onClick={handleLogout}>Cerrar sesión</li>
+          
         </ul>
       )}
     </div>
