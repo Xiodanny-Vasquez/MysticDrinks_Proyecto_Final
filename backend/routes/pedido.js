@@ -12,11 +12,33 @@ const transporter = nodemailer.createTransport({
 });
 
 router.post("/", async (req, res) => {
-    const { usuario, cocteles, total } = req.body;
+    const { usuario, cocteles } = req.body;
 
     try {
+        // 🔎 Calcular total real desde los cócteles
+        let total = 0;
+        cocteles.forEach((c) => {
+            if (!c.price) return;
+
+            const precioStr = typeof c.price === "string" ? c.price : c.price.toString();
+            const precioLimpio = precioStr.replace(/[^\d,]/g, "").replace(",", ".");
+            const precio = parseFloat(precioLimpio);
+
+            if (!isNaN(precio)) {
+                const cantidad = parseInt(c.quantity) || 1;
+                total += precio * cantidad;
+            } else {
+                console.warn("⚠️ Precio inválido para cóctel:", c.title, c.price);
+            }
+        });
+
+        // 💰 Formato final: redondeado a miles en pesos COP
+        const totalRedondeado = Math.round(total / 1000) * 1000;
+        const totalCOP = `$${totalRedondeado.toLocaleString("es-CO")} COP`;
+
+        // Guardar en Supabase
         const { error: dbError } = await supabase
-            .from("compras") // Asegúrate que este nombre coincida con Supabase
+            .from("compras")
             .insert([
                 {
                     nombre: usuario.nombre,
@@ -25,7 +47,7 @@ router.post("/", async (req, res) => {
                     ciudad: usuario.ciudad,
                     telefono: usuario.telefono,
                     cocteles: JSON.stringify(cocteles),
-                    total,
+                    total: totalRedondeado,
                 },
             ]);
 
@@ -34,6 +56,7 @@ router.post("/", async (req, res) => {
             throw dbError;
         }
 
+        // 🧾 Generar resumen visual
         const resumen = cocteles
             .map((c) => `• ${c.title} (x${c.quantity})`)
             .join("\n");
@@ -44,7 +67,8 @@ router.post("/", async (req, res) => {
 Aquí está el resumen de tu pedido:
 ${resumen}
 
-Total: $${total}
+Total: ${totalCOP}
+
 Dirección: ${usuario.direccion}, ${usuario.ciudad}
 Teléfono: ${usuario.telefono}
 `;
@@ -57,7 +81,7 @@ Teléfono: ${usuario.telefono}
             text: mensaje,
         });
 
-        // Copia para MysticDrinks
+        // Enviar copia a Mystic Drinks
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: "mysticdrinksco@gmail.com",
@@ -65,10 +89,16 @@ Teléfono: ${usuario.telefono}
             text: `Nueva compra de ${usuario.nombre}:\n\n${mensaje}`,
         });
 
-        res.status(200).json({ success: true, message: "Pedido procesado exitosamente" });
+        res.status(200).json({
+            success: true,
+            message: "Pedido procesado exitosamente",
+        });
     } catch (error) {
-        console.error("Error al procesar el pedido:", error);
-        res.status(500).json({ success: false, message: "Error al procesar el pedido" });
+        console.error("❌ Error al procesar el pedido:", error);
+        res.status(500).json({
+            success: false,
+            message: "Error al procesar el pedido",
+        });
     }
 });
 
