@@ -357,7 +357,9 @@ app.get("/api/auth/provider", async (req, res) => {
 });
 
 app.get("/api/auth/me", async (req, res) => {
-  const token = req.headers.token;
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : null;
+
 
   if (!token) {
     return res.status(401).json({ message: "Token no proporcionado" });

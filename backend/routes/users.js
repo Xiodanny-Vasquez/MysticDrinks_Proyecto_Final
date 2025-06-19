@@ -9,11 +9,17 @@ const supabase = createClient(
 );
 
 async function isAdmin(req, res, next) {
-  const token = req.headers.authorization?.replace("Bearer ", "");
-  if (!token) return res.status(401).json({ message: "Token no proporcionado" });
+  const authHeader = req.headers.authorization;
+  const token = authHeader?.startsWith("Bearer ") ? authHeader.split(" ")[1] : null;
+
+  if (!token) {
+    return res.status(401).json({ message: "Token no proporcionado" });
+  }
 
   const { data, error } = await supabase.auth.getUser(token);
-  if (error || !data?.user) return res.status(401).json({ message: "Token inválido" });
+  if (error || !data?.user) {
+    return res.status(401).json({ message: "Token inválido o expirado" });
+  }
 
   const { data: userData, error: userError } = await supabase
     .from("users")

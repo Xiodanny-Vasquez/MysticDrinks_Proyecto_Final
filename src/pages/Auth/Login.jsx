@@ -57,13 +57,21 @@ function Login() {
         password,
       });
         
-        const { token, user } = res.data;
+        const { session, user } = res.data;
+        const token = session?.access_token;
+
+        if (!token) {
+          setErrorMsg("Error al obtener el token. Intenta más tarde.");
+          return;
+        }
+
 
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
         login(user, token);
 
         handleRedirectByRole(user.rol);
+        
       } catch (error) {
         console.error("Login error:", error.response?.data || error.message);
 

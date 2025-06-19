@@ -4,15 +4,23 @@ import { toast } from "react-toastify";
 import "./AdminPage.css";
 
 export default function AdminPage() {
-  const { token } = useAuth();
+  const { token, user, loading } = useAuth(); // ✅ usamos loading
   const [users, setUsers] = useState([]);
-  const [loadingUsers, setLoadingUsers] = useState(true);
+  const [loadingUsers, setLoadingUsers] = useState(false);
+
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [identification, setIdentification] = useState("");
   const [rol, setRol] = useState("user");
   const [editingUserId, setEditingUserId] = useState(null);
+
+  // ✅ Evita llamar la API hasta que el token esté validado
+  useEffect(() => {
+    if (user && user.rol === "admin") {
+      fetchUsers();
+    }
+  }, [user]);
 
   const fetchUsers = async () => {
     setLoadingUsers(true);
@@ -21,15 +29,14 @@ export default function AdminPage() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const errData = await res.json().catch(() => null);
-        const msg = errData?.message || "Error cargando usuarios";
+        const msg = data?.message || "Error cargando usuarios";
         toast.error(msg);
-        setUsers([]);
-        return;
+        return setUsers([]);
       }
 
-      const data = await res.json();
       setUsers(Array.isArray(data) ? data : data.users || []);
     } catch (error) {
       toast.error("Error cargando usuarios");
@@ -39,9 +46,14 @@ export default function AdminPage() {
     }
   };
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  // ✅ Espera validación del AuthProvider
+  if (loading) return <p className="loader">Verificando sesión...</p>;
+
+  if (!user) return <p className="access-denied">No has iniciado sesión.</p>;
+
+  if (user.rol !== "admin") {
+    return <p className="access-denied">Acceso denegado. No tienes permisos para ver esta página.</p>;
+  }
 
   const resetForm = () => {
     setEmail("");
@@ -54,7 +66,6 @@ export default function AdminPage() {
 
   const handleCreate = async () => {
     const edadParsed = parseInt(age, 10);
-
     if (!email.trim() || !name.trim() || isNaN(edadParsed) || edadParsed <= 0 || !identification.trim()) {
       return toast.warn("Todos los campos son obligatorios y la edad debe ser válida");
     }
@@ -72,36 +83,34 @@ export default function AdminPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}` },
+          Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify(payload),
       });
 
-      const rawText = await res.text();
+      const text = await res.text();
       let data;
-      try {
-        data = JSON.parse(rawText);
-      } catch (err) {}
+      try { data = JSON.parse(text); } catch {}
 
       if (!res.ok) {
-        const errorMessage = data?.message || `Error inesperado (${res.status})`;
-        return toast.error(`Error al crear usuario: ${errorMessage}`);
+        return toast.error(data?.message || "Error al crear usuario");
       }
 
       toast.success("Usuario creado exitosamente");
       await fetchUsers();
       resetForm();
     } catch (error) {
-      toast.error(`Error al crear usuario: ${error.message}`);
+      toast.error("Error al crear usuario");
     }
   };
 
-  const handleEditClick = (user) => {
-    setEditingUserId(user.id);
-    setEmail(user.email);
-    setName(user.name || "");
-    setAge(user.edad?.toString() || "");
-    setIdentification(user.numero_de_identificacion || "");
-    setRol(user.rol);
+  const handleEditClick = (u) => {
+    setEditingUserId(u.id);
+    setEmail(u.email);
+    setName(u.name || "");
+    setAge(u.edad?.toString() || "");
+    setIdentification(u.numero_de_identificacion || "");
+    setRol(u.rol);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -128,9 +137,8 @@ export default function AdminPage() {
       });
 
       if (!res.ok) {
-        const errData = await res.json().catch(() => null);
-        const msg = errData?.message || "Error al actualizar usuario";
-        return toast.error(msg);
+        const err = await res.json().catch(() => null);
+        return toast.error(err?.message || "Error al actualizar usuario");
       }
 
       toast.success("Usuario actualizado exitosamente");
@@ -151,9 +159,8 @@ export default function AdminPage() {
       });
 
       if (!res.ok) {
-        const errData = await res.json().catch(() => null);
-        const msg = errData?.message || "Error al eliminar usuario";
-        return toast.error(msg);
+        const err = await res.json().catch(() => null);
+        return toast.error(err?.message || "Error al eliminar usuario");
       }
 
       toast.success("Usuario eliminado");
@@ -176,9 +183,8 @@ export default function AdminPage() {
       });
 
       if (!res.ok) {
-        const errData = await res.json().catch(() => null);
-        const msg = errData?.message || "Error al actualizar rol";
-        return toast.error(msg);
+        const err = await res.json().catch(() => null);
+        return toast.error(err?.message || "Error al actualizar rol");
       }
 
       toast.success("Rol actualizado");
@@ -192,6 +198,7 @@ export default function AdminPage() {
     <div className="admin-panel">
       <h2>👑 Panel de Administración</h2>
       <p>Bienvenido, administrador.</p>
+
       <div className="form-section">
         <h3>{editingUserId ? "Editar usuario" : "Crear nuevo usuario"}</h3>
         <div className="form-grid">
@@ -209,15 +216,14 @@ export default function AdminPage() {
             <button onClick={handleCreate}>Crear</button>
           )}
           {editingUserId && (
-            <button className="cancel-btn" onClick={resetForm}>
-              Cancelar
-            </button>
+            <button className="cancel-btn" onClick={resetForm}>Cancelar</button>
           )}
         </div>
       </div>
+
       <h3>Usuarios registrados</h3>
       {loadingUsers ? (
-        <p>Cargando...</p>
+        <p>Cargando usuarios...</p>
       ) : users.length === 0 ? (
         <p>No hay usuarios registrados.</p>
       ) : (
