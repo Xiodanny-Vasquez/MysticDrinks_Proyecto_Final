@@ -129,7 +129,7 @@ function Login() {
           </div>
 
           <Link to="/register" className="toggle-link">
-            ¿Nuevo usuario? Regístrate aquí
+            ¿Nuevo usuario? Regístrate aquí ahora
           </Link>
         </div>
       </div>

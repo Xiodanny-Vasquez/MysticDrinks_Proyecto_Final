@@ -129,7 +129,6 @@ app.post("/api/auth/register", async (req, res) => {
     if (authError || !authUser?.user?.id) {
       console.error("❌ Error en Auth:", authError);
 
-      // Manejar error específico si el usuario ya existe
       if (
         authError?.status === 422 &&
         authError.message?.toLowerCase().includes("user already registered")
@@ -139,7 +138,6 @@ app.post("/api/auth/register", async (req, res) => {
 
       return res.status(500).json({ message: "Error en Auth: " + authError.message });
     }
-
 
     const userId = authUser.user.id;
 
@@ -152,6 +150,25 @@ app.post("/api/auth/register", async (req, res) => {
 
     if (existingUser) {
       return res.status(409).json({ message: "Este usuario ya fue registrado" });
+    }
+
+    // Verificar duplicado en número de identificación
+    const { data: existingDni, error: dniError } = await supabase
+      .from("users")
+      .select("id")
+      .eq("numero_de_identificacion", numero_de_identificacion)
+      .maybeSingle();
+
+    if (dniError) {
+      console.error("❌ Error al verificar número de identificación:", dniError);
+      return res.status(500).json({ message: "Error al verificar número de identificación" });
+    }
+
+    if (existingDni) {
+      return res.status(409).json({
+        code: "identificacion_duplicada",
+        message: "Este número de identificación ya está registrado.",
+      });
     }
 
     // Insertar en tabla personalizada
@@ -177,6 +194,7 @@ app.post("/api/auth/register", async (req, res) => {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 });
+
 
 // ====================== LOGIN MANUAL ======================
 app.post("/api/auth/login", async (req, res) => {
@@ -306,25 +324,46 @@ app.post("/api/auth/oauth-register", async (req, res) => {
       return res.status(401).json({ message: "Token inválido o usuario no autenticado" });
     }
 
+    // 🔍 Verificar si el número de identificación ya existe en otro usuario
+    const { data: existingUser, error: checkError } = await supabase
+      .from("users")
+      .select("id")
+      .eq("numero_de_identificacion", cleanDni)
+      .neq("id", user.id) // evitar conflicto consigo mismo
+      .maybeSingle();
+
+    if (checkError) {
+      console.error("Error verificando duplicado:", checkError);
+      return res.status(500).json({ message: "Error al verificar identificación" });
+    }
+
+    if (existingUser) {
+      return res.status(409).json({
+        code: "identificacion_duplicada",
+        message: "Este número de identificación ya está registrado.",
+      });
+    }
+
     const { error: updateError } = await supabase
       .from("users")
       .update({ edad: parsedEdad, numero_de_identificacion: cleanDni })
       .eq("id", user.id)
       .select()
-      .single(); // obtiene el usuario actualizado
+      .single();
 
     if (updateError) {
       console.error("Error al completar perfil:", updateError);
       return res.status(500).json({ message: "Error al actualizar perfil" });
     }
 
-    res.status(200).json({ message: "Perfil completado con éxito", user });
+    res.status(200).json({ message: "Perfil completado con éxito" });
 
   } catch (error) {
     console.error("❌ Error en /oauth-register:", error);
     res.status(500).json({ message: "Error del servidor" });
   }
 });
+
 
 // ====================== VERIFICAR SI ES USUARIO DE GOOGLE ======================
 
