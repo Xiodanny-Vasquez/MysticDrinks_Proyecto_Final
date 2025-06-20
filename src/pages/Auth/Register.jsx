@@ -63,7 +63,6 @@ function Register() {
     try {
       const normalizedEmail = formData.email.trim().toLowerCase();
 
-      // 🔍 Verificar si ya existe y fue registrado con Google
       const providerCheck = await axios.get(
         `/api/auth/provider?email=${encodeURIComponent(normalizedEmail)}`
       );
@@ -78,7 +77,6 @@ function Register() {
         return;
       }
 
-      // 🚀 Registro manual
       await axios.post("/api/auth/register", {
         name: formData.name.trim(),
         edad: parseInt(formData.edad),
@@ -89,21 +87,38 @@ function Register() {
 
       navigate("/account");
     } catch (error) {
-      const supaError = error.response?.data;
+      const supaError = error.response?.data || {};
+      const msg = supaError.message?.toLowerCase() || "";
 
-      if (
-        supaError?.code === "user_already_exists" ||
-        error.response?.status === 409
-      ) {
-        setErrors({
-          email: "Este correo ya está registrado. Intenta iniciar sesión.",
-        });
-      } else {
-        setErrors({
-          general: "Error al registrar. Intenta de nuevo.",
-        });
-      }
-    } finally {
+  const newErrors = {};
+
+  if (
+    supaError.code === "user_already_exists" ||
+    msg.includes("correo") ||
+    msg.includes("email")
+  ) {
+    newErrors.email = "Este correo ya está registrado. Intenta iniciar sesión.";
+  }
+
+  if (
+    supaError.code === "identificacion_duplicada" ||
+    msg.includes("identificación") ||
+    msg.includes("identificacion") ||
+    msg.includes("numero de identificacion")
+  ) {
+    newErrors.numeroDeIdentificacion = "Este número de identificación ya está registrado.";
+  }
+
+  // Si no se detectó nada específico, mostramos error general
+  if (Object.keys(newErrors).length === 0) {
+    newErrors.general = "Error al registrar. Intenta de nuevo.";
+  }
+
+  setErrors((prev) => ({
+    ...prev,
+    ...newErrors,
+  }));
+} finally {
       setIsSubmitting(false);
     }
   };
@@ -113,7 +128,7 @@ function Register() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: "http://localhost:3000/oauth-callback", // ajusta si es producción
+          redirectTo: "http://localhost:3000/oauth-callback",
         },
       });
 
@@ -194,7 +209,11 @@ function Register() {
               {isSubmitting ? "Registrando..." : "Unirme"}
             </button>
 
-            {errors.general && <p className="error-msg">{errors.general}</p>}
+            {errors.general && (
+              <p className="error-msg" style={{ textAlign: "center" }}>
+                {errors.general}
+              </p>
+            )}
 
             <div
               style={{
